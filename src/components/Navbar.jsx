@@ -67,7 +67,7 @@ const Navbar = () => {
           </div>*/}
             {/* if window location is exactly nexonware.com */}
             <Link href="/" className="hover:text-blue-400 transition-colors">
-              Crafted by Nexonware
+              <span className="text-xs">crafted at</span> Nexonware
             </Link>
           </div>
 
