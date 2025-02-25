@@ -7,9 +7,28 @@
   --foreground: #171717;
 }
 
+.jsoneditor-search {
+  transform: translate(-120px, 0);
+}
+.ace_error {
+  display: none !important;
+}
+.jsoneditor-poweredBy {
+  display: none;
+}
+.jsoneditor {
+  border-radius: 10px;
+  border: 1px solid #e1e1e1 !important;
+}
+.jsoneditor-menu {
+  border-radius: 9px 9px 0 0;
+}
+.jsoneditor-statusbar {
+  border-radius: 0 0 9px 9px;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
     --foreground: #ededed;
   }
 }
