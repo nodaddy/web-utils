@@ -30,8 +30,8 @@ export const metadata = {
     images: [
       {
         url: "https://nexonware.com/assets/json-formatter-preview.png",
-        width: 1200,
-        height: 630,
+        width: 120,
+        height: 120,
         alt: "JSON Formatter and JSON Viewer Preview",
       },
     ],
