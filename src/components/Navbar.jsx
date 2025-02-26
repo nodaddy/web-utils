@@ -27,7 +27,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex space-x-8 items-center">
             {/* Solutions Dropdown */}
             {/*<div className="relative group">
             <button
@@ -67,9 +67,17 @@ const Navbar = () => {
             </div> 
           </div>*/}
             {/* if window location is exactly nexonware.com */}
-            {/* <Link href="/" className="hover:text-blue-400 transition-colors">
-              <span className="text-xs">crafted at</span> Nexonware
-            </Link> */}
+            <div
+              onClick={() => {
+                alert(
+                  "Want something changed? Email your request to neeleshsharma351@gmail.com"
+                );
+                logGAEvent("click_give_feedback");
+              }}
+              className="hover:text-blue-400 transition-colors"
+            >
+              Give Feedback
+            </div>
             <a
               href="https://www.buymeacoffee.com/neensta"
               onClick={() => logGAEvent("click_buy_me_a_coffee")}

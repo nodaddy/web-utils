@@ -362,10 +362,9 @@ const JsonFormatter = () => {
           align="center"
           style={{
             top: "5rem",
-            left: "50%",
-            transform: "translateX(-50%)",
+            right: "2rem",
           }}
-          className={`absolute   border mb-4 p-2 rounded-md ${
+          className={`absolute  border mb-4 p-2 rounded-md ${
             statusType === "success"
               ? "bg-green-100 text-green-800 border-green-500"
               : statusType === "error"
@@ -377,7 +376,7 @@ const JsonFormatter = () => {
         </div>
       )}
 
-      <div className="flex flex-col md:flex-row gap-6 p-6">
+      <div className="flex flex-col md:flex-row gap-6 p-6 pt-2">
         {/* Source Editor */}
         <div className="flex-1">
           <div className="flex justify-start items-center mb-2 gap-6">
