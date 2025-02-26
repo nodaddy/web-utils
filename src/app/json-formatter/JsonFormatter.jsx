@@ -471,7 +471,7 @@ const JsonFormatter = () => {
               setFileType("yaml");
               logGAEvent("click_convert_yaml");
             }}
-            className="font-bold hover:bg-gray-600 hover:text-white bg-white border text-gray-600 px-4 py-2 rounded"
+            className="font-bold hover:bg-gray-600 text-sm hover:text-white bg-white border text-gray-600 px-4 py-2 rounded"
           >
             to YAML →
           </button>
@@ -481,7 +481,7 @@ const JsonFormatter = () => {
               setFileType("xml");
               logGAEvent("click_convert_xml");
             }}
-            className="font-bold hover:bg-gray-600 hover:text-white bg-white border text-gray-600 px-4 py-2 rounded"
+            className="font-bold hover:bg-gray-600 text-sm hover:text-white bg-white border text-gray-600 px-4 py-2 rounded"
           >
             to XML →
           </button>
@@ -491,7 +491,7 @@ const JsonFormatter = () => {
               setFileType("csv");
               logGAEvent("click_convert_csv");
             }}
-            className="font-bold hover:bg-gray-600 hover:text-white bg-white border text-gray-600 px-4 py-2 rounded"
+            className="font-bold hover:bg-gray-600 text-sm hover:text-white bg-white border text-gray-600 px-4 py-2 rounded"
           >
             to CSV →
           </button>
