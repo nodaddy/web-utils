@@ -10,7 +10,7 @@ export default function Home() {
           <h1 className="text-4xl sm:text-5xl font-bold">NEXONWARE</h1>
         </header>
         <div className="list-inside list-decimal text-xl text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          A universe of powerful and easy-to-use web utilities.
+          Web utilities for everyone 🚀
         </div>
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
