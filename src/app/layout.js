@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Nexonware",
-  description: "Web utilities for everyone 🚀",
+  description: "Simplifying Your Digital Life",
 };
 
 export default function RootLayout({ children }) {
@@ -42,6 +42,7 @@ export default function RootLayout({ children }) {
             };
           `}
         </Script>
+        {/* google ads */}
         <meta
           name="google-adsense-account"
           content="ca-pub-5830475501304390"

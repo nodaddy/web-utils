@@ -4,14 +4,15 @@ export default function Home() {
   return (
     <div className="w-full bg-black flex flex-col column items-center justify-around min-h-screen font-[family-name:var(--font-geist-sans)]">
       {/* {heading h1 with large text} */}
-
+      <br />
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <header className="row-start-1 text-center sm:text-left">
           <h1 className="text-4xl sm:text-5xl font-bold">NEXONWARE</h1>
         </header>
-        <div className="list-inside list-decimal text-xl text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          Web utilities for everyone 🚀
+        <div className="list-inside list-decimal text-xl text-center sm:text-left]">
+          Simplifying Your Digital Life
         </div>
+        <br />
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
             className="text-black rounded border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-7 sm:h-9 px-4 sm:px-5"
@@ -21,7 +22,7 @@ export default function Home() {
             Explore
           </a>
           <a
-            className="rounded transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-7 sm:h-9 px-4 sm:px-5 "
+            className="rounded transition-colors flex items-center justify-center text-sm sm:text-base h-7 sm:h-9 px-4 sm:px-5 "
             href=""
             rel="noopener noreferrer"
           >

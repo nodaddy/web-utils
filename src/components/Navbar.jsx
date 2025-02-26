@@ -17,12 +17,34 @@ const Navbar = () => {
 
   return (
     pathname !== "/" && (
-      <nav className="bg-slate-900 text-white py-3 px-6 shadow-md fixed w-full top-0 z-50">
+      <nav className="bg-slate-900 text-white py-4 px-6 shadow-md fixed w-full top-0 z-50">
         <div className="mx-auto flex justify-between items-center">
           {/* Logo */}
           <div>
-            <Link href="/" className="flex items-center text-2xl text-blue-400">
-              {tool || "Nexonware"}
+            <Link href="/" className="flex items-center text-xl text-blue-400">
+              {tool ? (
+                <div
+                  className="relative"
+                  style={{
+                    transform: "translateY(-6px)",
+                  }}
+                >
+                  {tool.toUpperCase()}
+                  <span
+                    style={{
+                      top: "18px",
+                      right: "0px",
+                      paddingTop: "1px",
+                      fontSize: "0.8rem",
+                    }}
+                    className="absolute text-white"
+                  >
+                    <i>by</i> NEXONWARE
+                  </span>{" "}
+                </div>
+              ) : (
+                "Nexonware"
+              )}
             </Link>
           </div>
 
