@@ -136,7 +136,7 @@ const JsonFormatter = () => {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
 
-      setStatusMessage("JSON downloaded successfully");
+      setStatusMessage("File downloaded successfully");
       setStatusType("success");
     } catch (error) {
       setStatusMessage(`Download failed: ${error.message}`);
@@ -322,9 +322,10 @@ const JsonFormatter = () => {
           resultEditorRef.current.set(currentJson); // Restore previous content
         } catch (error) {
           setStatusMessage(
-            `Failed to switch to ${resultMode} mode, JSON may be invalid`,
+            `Only valid JSON can be converted to tree view: ${error.message}`,
             error
           );
+          setStatusType("error");
         }
       }
     }
