@@ -77,7 +77,7 @@ export default function Home() {
             width={16}
             height={16}
           />
-          Visit our blog →
+          Join our team
         </a>
       </footer>
     </div>
