@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAppContext } from "@/Context/AppContext";
 import { usePathname } from "next/navigation";
+import { logGAEvent } from "@/app/googleAnalytics/gaEvents";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -66,11 +67,21 @@ const Navbar = () => {
             </div> 
           </div>*/}
             {/* if window location is exactly nexonware.com */}
-            <Link href="/" className="hover:text-blue-400 transition-colors">
+            {/* <Link href="/" className="hover:text-blue-400 transition-colors">
               <span className="text-xs">crafted at</span> Nexonware
-            </Link>
+            </Link> */}
+            <a
+              href="https://www.buymeacoffee.com/neensta"
+              onClick={() => logGAEvent("click_buy_me_a_coffee")}
+              target="_blank"
+            >
+              <img
+                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                alt="Buy Me A Coffee"
+                style={{ height: "35px" }}
+              />
+            </a>
           </div>
-
           {/* CTA Buttons */}
           {/* <div className="hidden md:flex items-center space-x-4"></div> */}
 
