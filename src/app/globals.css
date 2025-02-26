@@ -7,6 +7,15 @@
   --foreground: #171717;
 }
 
+.landingpage-video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100vw !important;
+  object-fit: contain;
+  z-index: -1;
+}
+
 .jsoneditor-search {
   transform: translate(-120px, 0);
 }

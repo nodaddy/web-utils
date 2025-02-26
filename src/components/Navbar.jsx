@@ -78,7 +78,8 @@ const Navbar = () => {
             >
               Give Feedback
             </div>
-            <a
+            {/* buy me a coffee */}
+            {/* <a
               href="https://www.buymeacoffee.com/neensta"
               onClick={() => logGAEvent("click_buy_me_a_coffee")}
               target="_blank"
@@ -88,7 +89,7 @@ const Navbar = () => {
                 alt="Buy Me A Coffee"
                 style={{ height: "35px" }}
               />
-            </a>
+            </a> */}
           </div>
           {/* CTA Buttons */}
           {/* <div className="hidden md:flex items-center space-x-4"></div> */}

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="bg-black grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="w-full bg-black flex flex-col column items-center justify-around min-h-screen font-[family-name:var(--font-geist-sans)]">
       {/* {heading h1 with large text} */}
 
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
@@ -10,7 +10,7 @@ export default function Home() {
           <h1 className="text-4xl sm:text-5xl font-bold">NEXONWARE</h1>
         </header>
         <div className="list-inside list-decimal text-xl text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          Easy to use and performant web applications
+          A universe of powerful and easy-to-use web utilities.
         </div>
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
@@ -19,15 +19,15 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Our Products
+            Explore
           </a>
           <a
-            className="rounded transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-7 sm:h-9 px-4 sm:px-5 sm:min-w-44"
+            className="rounded transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-7 sm:h-9 px-4 sm:px-5 "
             href=""
             target="_blank"
             rel="noopener noreferrer"
           >
-            Join as a Developer
+            Blog
           </a>
         </div>
         <br />
@@ -35,7 +35,7 @@ export default function Home() {
         <br />
         <br />
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-end w-full">
+      <footer className="row-start-3 pr-20 flex gap-6 flex-wrap items-center justify-end w-full">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
           href=""
