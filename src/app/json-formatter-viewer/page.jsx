@@ -40,7 +40,7 @@ export const metadata = {
     // Primary Keywords (High Volume)
     "JSON Formatter",
     "JSON Viewer",
-  
+
     // Secondary Keywords (Medium Volume, Low Competition)
     "JSON Formatter Online",
     "JSON Vali",
@@ -48,7 +48,7 @@ export const metadata = {
     "JSON Beautifier",
     "JSON Editor Online",
     "JSON Viewer Online",
-  
+
     // Long-Tail Keywords (Highly Specific, Low Competition)
     "String to JSON Online",
     "Validate JSON Online",
@@ -59,9 +59,8 @@ export const metadata = {
     "Check Valid JSON Online",
     "JSON Verification",
     "JSON Verify",
-    "Convert JSON String to JSON"
-  ];
-  
+    "Convert JSON String to JSON",
+  ],
 };
 
 export default function JsonEditorPage() {
