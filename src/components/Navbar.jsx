@@ -68,6 +68,9 @@ const Navbar = () => {
           </div>*/}
             {/* if window location is exactly nexonware.com */}
             <div
+              style={{
+                cursor: "pointer",
+              }}
               onClick={() => {
                 alert(
                   "Want something changed? Email your request to neeleshsharma351@gmail.com"

@@ -16,7 +16,6 @@ export default function Home() {
           <a
             className="text-black rounded border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-7 sm:h-9 px-4 sm:px-5"
             href=""
-            target="_blank"
             rel="noopener noreferrer"
           >
             Explore
@@ -24,7 +23,6 @@ export default function Home() {
           <a
             className="rounded transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-7 sm:h-9 px-4 sm:px-5 "
             href=""
-            target="_blank"
             rel="noopener noreferrer"
           >
             Blog
