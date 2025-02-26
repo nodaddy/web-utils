@@ -401,7 +401,7 @@ const JsonFormatter = () => {
           <div
             align="center"
             onClick={validateJson}
-            className="text-gray-300 text-sm font-bold"
+            className="text-gray-200 text-sm font-bold"
           >
             NEXONWARE
           </div>
