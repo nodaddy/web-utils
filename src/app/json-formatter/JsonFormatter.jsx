@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import "jsoneditor/dist/jsoneditor.min.css";
 import { useAppContext } from "@/Context/AppContext";
+import { logGAEvent } from "../googleAnalytics/gaEvents";
 
 const JsonFormatter = () => {
   const sourceContainerRef = useRef(null);
@@ -229,6 +230,8 @@ const JsonFormatter = () => {
         }
       };
       reader.readAsText(file);
+      // send size of the file to google analytics
+      logGAEvent("file_uploaded", { file_size: file.size });
     }
   }, []);
 
@@ -384,6 +387,7 @@ const JsonFormatter = () => {
               <input
                 type="file"
                 accept=".json"
+                onClick={() => logGAEvent("click_file_upload")}
                 onChange={handleFileUpload}
                 className="rounded text-sm"
               />
@@ -408,6 +412,7 @@ const JsonFormatter = () => {
             onClick={() => {
               validateJson();
               setFileType("json");
+              logGAEvent("click_validate");
             }}
             className="bg-green-500 hover:bg-green-600 font-bold text-white px-4 py-2 rounded"
           >
@@ -420,6 +425,7 @@ const JsonFormatter = () => {
               onClick={() => {
                 setShowIndentOptions(!showIndentOptions);
                 setFileType("json");
+                logGAEvent("click_space_indent");
               }}
               className="bg-purple-500 font-bold hover:bg-purple-600 text-white px-4 py-2 rounded w-full flex justify-around items-center"
             >
@@ -449,6 +455,7 @@ const JsonFormatter = () => {
             onClick={() => {
               minifyJson();
               setFileType("json");
+              logGAEvent("click_minify");
             }}
             className="font-bold bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
           >
@@ -462,6 +469,7 @@ const JsonFormatter = () => {
             onClick={() => {
               convertJson("yaml");
               setFileType("yaml");
+              logGAEvent("click_convert_yaml");
             }}
             className="font-bold hover:bg-gray-600 hover:text-white bg-white border text-gray-600 px-4 py-2 rounded"
           >
@@ -471,6 +479,7 @@ const JsonFormatter = () => {
             onClick={() => {
               convertJson("xml");
               setFileType("xml");
+              logGAEvent("click_convert_xml");
             }}
             className="font-bold hover:bg-gray-600 hover:text-white bg-white border text-gray-600 px-4 py-2 rounded"
           >
@@ -480,6 +489,7 @@ const JsonFormatter = () => {
             onClick={() => {
               convertJson("csv");
               setFileType("csv");
+              logGAEvent("click_convert_csv");
             }}
             className="font-bold hover:bg-gray-600 hover:text-white bg-white border text-gray-600 px-4 py-2 rounded"
           >
@@ -493,14 +503,20 @@ const JsonFormatter = () => {
             <h2 className="text-lg font-semibold">Result JSON</h2>
             <div className="flex justify-between items-center">
               <button
-                onClick={downloadAsFile}
+                onClick={() => {
+                  downloadAsFile();
+                  logGAEvent("click_download");
+                }}
                 className="font-bold bg-blue-500 hover:bg-gray-600 text-sm text-white px-3 py-1 rounded flex items-center gap-1"
               >
                 Download ↓
               </button>
               &nbsp; &nbsp;
               <button
-                onClick={copyResultToClipboard}
+                onClick={() => {
+                  copyResultToClipboard();
+                  logGAEvent("click_copy");
+                }}
                 className="bg-blue-500 hover:bg-gray-600 text-sm text-white px-3 py-1 rounded flex items-center gap-1"
               >
                 <span>📋</span> Copy
@@ -515,6 +531,9 @@ const JsonFormatter = () => {
             <select
               onChange={(event) => {
                 setResultMode(event.target.value);
+                logGAEvent("change_result_mode", {
+                  mode: event.target.value,
+                });
               }}
               className="absolute top-1 outline-0 right-4 bg-transparent text-sm text-white px-3 py-1 rounded z-10"
             >
