@@ -1,5 +1,5 @@
 const applicationNamesForGA = {
-  jsonFormatterViewer: "json-formatter-viewer",
+  jsonFormatterViewer: "json-formatter",
 };
 
 export default applicationNamesForGA;

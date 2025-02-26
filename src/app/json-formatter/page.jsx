@@ -26,7 +26,7 @@ export const metadata = {
     description:
       "Quickly format, validate, and beautify JSON with our free online JSON tool.",
     type: "website",
-    url: "https://nexonware.com/json-formatter-viewer",
+    url: "https://nexonware.com/json-formatter",
     images: [
       {
         url: "https://nexonware.com/assets/json-formatter-preview.png",
