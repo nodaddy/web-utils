@@ -17,48 +17,36 @@ const Colorpalette = dynamic(() => import("./ColorPalette"), {
 });
 
 export const metadata = {
-  title: "Free JSON Formatter & Viewer Online | Validate & Beautify JSON",
+  title:
+    "Free Color Palette Generator | Generate Color Schemes and Harmony Online",
   description:
-    "Use our free JSON Formatter & Viewer to format, beautify, validate, and parse JSON online. Convert JSON string to JSON, YAML, XML, CSV with ease. Try now!",
+    "Use our free Color Palette Generator to create beautiful color schemes and harmony. Generate pastel, bright, purple, pink, orange, and other color palettes online. Try now!",
   openGraph: {
-    title: "Free JSON Formatter & Viewer Online",
+    title:
+      "Free Color Palette Generator | Generate Color Schemes and Harmony Online",
     description:
-      "Quickly format, validate, and beautify JSON with our free online JSON tool.",
+      "Quickly create beautiful color palettes, free online color palette generator. Pastel, bright, purple, pink, orange, and other color palettes online. Try now!",
     type: "website",
-    url: "https://nexonware.com/json-formatter",
+    url: "https://nexonware.com/color-palette",
     images: [
       {
-        url: "https://nexonware.com/assets/json-formatter-preview.png",
+        url: "https://nexonware.com/assets/color-palette.png",
         width: 120,
         height: 120,
-        alt: "JSON Formatter and JSON Viewer Preview",
+        alt: "Color Palette Generator Preview",
       },
     ],
   },
   keywords: [
     // Primary Keywords (High Volume)
-    "JSON Formatter",
-    "JSON Viewer",
-
-    // Secondary Keywords (Medium Volume, Low Competition)
-    "JSON Formatter Online",
-    "JSON Vali",
-    "JSON Formatter Validator",
-    "JSON Beautifier",
-    "JSON Editor Online",
-    "JSON Viewer Online",
-
-    // Long-Tail Keywords (Highly Specific, Low Competition)
-    "String to JSON Online",
-    "Validate JSON Online",
-    "Parse JSON Online",
-    "JSON File Viewer",
-    "JSON to JSON Converter",
-    "JSON Formatter on Line",
-    "Check Valid JSON Online",
-    "JSON Verification",
-    "JSON Verify",
-    "Convert JSON String to JSON",
+    "Color palatte",
+    "Colour circle Chart",
+    "Pastel color palatte",
+    "Bright color palatte",
+    "Colour circle",
+    "Purple color palatte",
+    "Pink color palatte",
+    "Orange color palatte",
   ],
 };
 
