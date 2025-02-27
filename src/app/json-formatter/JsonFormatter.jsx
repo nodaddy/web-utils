@@ -406,13 +406,6 @@ const JsonFormatter = () => {
         {/* Action Buttons */}
         <div className="flex flex-col justify-start gap-3">
           <br />
-          <div
-            align="center"
-            onClick={validateJson}
-            className="text-gray-200 text-sm font-bold"
-          >
-            NEXONWARE
-          </div>
           <br />
 
           <button

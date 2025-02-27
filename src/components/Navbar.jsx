@@ -29,13 +29,13 @@ const Navbar = () => {
                     transform: "translateY(-6px)",
                   }}
                 >
-                  {tool.toUpperCase()}
+                  {tool}
                   <span
                     style={{
-                      top: "18px",
-                      right: "0px",
+                      top: "19px",
+                      right: "1px",
                       paddingTop: "1px",
-                      fontSize: "0.8rem",
+                      fontSize: "0.7rem",
                     }}
                     className="absolute text-white"
                   >

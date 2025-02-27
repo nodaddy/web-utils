@@ -65,9 +65,7 @@ export const metadata = {
 
 export default function JsonEditorPage() {
   return (
-    <div className="bg-[#f5f5f5] overflow:auto">
-      <br />
-      <br />
+    <div className="pt-16 bg-gradient-to-br from-blue-50 to-indigo-100 overflow:auto">
       <JsonFormatterPage />
 
       {<JsonFormatterApp />}
