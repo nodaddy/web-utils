@@ -21,7 +21,7 @@ export const allUtilities = {
     {
       id: "color-palette",
       title: "Color palette",
-      description: "Pick colors",
+      description: "Create color schemes",
       icon: "🎨",
     },
   ],

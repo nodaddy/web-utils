@@ -23,7 +23,7 @@ export const metadata = {
     "Use our free Color Palette Generator to create beautiful color schemes and harmony. Generate pastel, bright, purple, pink, orange, and other color palettes online. Try now!",
   openGraph: {
     title:
-      "Free Color Palette Generator | Generate Color Schemes and Harmony Online",
+      "Free Color Palette Generator | Generate Color Schemes and download pdf Online",
     description:
       "Quickly create beautiful color palettes, free online color palette generator. Pastel, bright, purple, pink, orange, and other color palettes online. Try now!",
     type: "website",

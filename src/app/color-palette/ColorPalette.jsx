@@ -6,7 +6,7 @@ import { jsPDF } from "jspdf";
 import { useAppContext } from "@/Context/AppContext";
 
 export default function Colorpalette() {
-  const [currentColor, setCurrentColor] = useState("#5E72E4");
+  const [currentColor, setCurrentColor] = useState("#B2FFFF");
   const { setTool } = useAppContext();
   const [palette, setPalette] = useState([]);
   const [activeTab, setActiveTab] = useState("solid");
