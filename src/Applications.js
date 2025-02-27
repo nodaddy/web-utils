@@ -24,6 +24,12 @@ export const allUtilities = {
       description: "Create color schemes",
       icon: "🎨",
     },
+    {
+      id: "password-generator",
+      title: "Secure Password Generator",
+      description: "Generate strong passwords",
+      icon: "🔒",
+    },
   ],
   "Developer Tools": [],
   Productivity: [],
