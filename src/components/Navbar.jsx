@@ -17,7 +17,7 @@ const Navbar = () => {
 
   return (
     pathname !== "/" && (
-      <nav className="bg-slate-900 text-white py-4 px-6 shadow-md fixed w-full top-0 z-50">
+      <nav className="bg-slate-900 text-white py-5 px-6 shadow-md fixed w-full top-0 z-50">
         <div className="mx-auto flex justify-between items-center">
           {/* Logo */}
           <div>

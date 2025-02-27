@@ -18,6 +18,12 @@ export const allUtilities = {
       description: "Format and validate JSON data",
       icon: "{;}",
     },
+    {
+      id: "color-palatte",
+      title: "Color palatte",
+      description: "Pick colors",
+      icon: "🎨",
+    },
   ],
   "Developer Tools": [],
   Productivity: [],

@@ -157,23 +157,23 @@ export default function Home() {
             </div>
 
             {/* Display utilities */}
-            <div className=" grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-1">
+            <div className=" grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-1 mt-11">
               {displayedUtilities.length > 0 ? (
                 displayedUtilities.map((util) => (
-                  <div key={util.id} className="py-2">
+                  <div key={util.id} className="py-1">
                     <Link
                       href={`/${util.id}`}
                       target="_blank"
-                      className="flex items-start group gap-2"
+                      className="flex items-end group gap-1"
                     >
                       {/* Utility icon */}
-                      <div className="mr-2 text-2xl text-gray-500">
+                      <div className="mr-1.5 text-2xl text-gray-500 border bg-gray-200 p-2 rounded-lg">
                         {util.icon}
                       </div>
 
                       {/* Utility title and description */}
-                      <div>
-                        <h3 className="pb-0 mb-0 text-gray-800 font-medium group-hover:text-blue-600 transition-colors">
+                      <div style={{ lineHeight: "1rem" }}>
+                        <h3 className="text-gray-800 font-medium group-hover:text-blue-600 transition-colors">
                           {util.title}
                         </h3>
                         <span className="text-xs text-gray-500">
