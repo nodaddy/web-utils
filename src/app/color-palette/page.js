@@ -1,9 +1,10 @@
 // app/json-editor/page.tsx (or /pages/json-editor.tsx in Pages Router)
 import dynamic from "next/dynamic";
+import ColorPaletteSEOContent from "./TextContent";
 // import JsonFormatter from "./JsonFormatter";
 
 //  Dynamically import the client component
-const ColorPalatte = dynamic(() => import("./ColorPalatte"), {
+const Colorpalette = dynamic(() => import("./ColorPalette"), {
   loading: () => (
     <p className="text-center text-xl text-gray-300">
       <br />
@@ -64,16 +65,16 @@ export const metadata = {
 export default function JsonEditorPage() {
   return (
     <div className="pt-28 flex justify-between bg-gradient-to-br text-gray-700 from-blue-50 to-indigo-100 overflow:auto">
-      <div align="center" className="w-[42rem] pt-6 text-black">
-        <h1 className="text-3xl">Color Palatte</h1>
+      <div className="text-black" style={{ width: "28vw" }}>
+        <ColorPaletteSEOContent />
       </div>
 
       <div
         style={{
-          width: "55vw",
+          width: "72vw",
         }}
       >
-        <ColorPalatte />
+        <Colorpalette />
       </div>
     </div>
   );

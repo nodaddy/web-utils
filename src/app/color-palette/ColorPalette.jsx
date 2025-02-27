@@ -1,22 +1,14 @@
 "use client";
-
-// pages/index.js
 import { useState, useEffect } from "react";
 import { ChromePicker } from "react-color";
 import { saveAs } from "file-saver";
 import { jsPDF } from "jspdf";
 import { useAppContext } from "@/Context/AppContext";
 
-export default function ColorPalatte() {
+export default function Colorpalette() {
   const [currentColor, setCurrentColor] = useState("#5E72E4");
   const { setTool } = useAppContext();
-  const [palette, setPalette] = useState([
-    "#5E72E4",
-    "#11CDEF",
-    "#2DCE89",
-    "#FB6340",
-    "#F5365C",
-  ]);
+  const [palette, setPalette] = useState([]);
   const [activeTab, setActiveTab] = useState("solid");
   const [gradientType, setGradientType] = useState("linear");
   const [gradientDirection, setGradientDirection] = useState("to right");
@@ -26,41 +18,92 @@ export default function ColorPalatte() {
   const [tooltipContent, setTooltipContent] = useState("");
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [showExportModal, setShowExportModal] = useState(false);
+  const [activePaletteTab, setActivePaletteTab] = useState("custom");
+
+  // Pre-defined palettes
+  const predefinedPalettes = {
+    default: [],
+    pastel: [
+      "#FADADD", // Pastel Pink
+      "#A7C7E7", // Pastel Blue
+      "#C8A2C8", // Pastel Lavender
+      "#C1E1C1", // Pastel Mint
+      "#FAEBD7", // Pastel Yellow
+      "#FFDBAC", // Pastel Peach
+      "#D8BFD8", // Pastel Purple
+      "#B2FFFF", // Pastel Cyan
+      "#FDFD96", // Pastel Light Yellow
+      "#FFB3BA", // Pastel Red
+    ],
+    purple: [
+      "#E6E6FA", // Lavender
+      "#D8BFD8", // Thistle
+      "#DDA0DD", // Plum
+      "#DA70D6", // Orchid
+      "#BA55D3", // Medium Orchid
+      "#9370DB", // Medium Purple
+      "#8A2BE2", // Blue Violet
+      "#9932CC", // Dark Orchid
+      "#8B008B", // Dark Magenta
+      "#4B0082", // Indigo
+    ],
+    orange: [
+      "#FFE4B5", // Moccasin
+      "#FFDAB9", // Peach Puff
+      "#FAEBD7", // Antique White
+      "#FFD700", // Gold
+      "#FFA500", // Orange
+      "#FF8C00", // Dark Orange
+      "#FF7F50", // Coral
+      "#FF6347", // Tomato
+      "#FF4500", // Orange Red
+      "#E9967A", // Dark Salmon
+    ],
+  };
+
+  // Load predefined palette when tab changes
+  useEffect(() => {
+    if (activePaletteTab !== "custom") {
+      setPalette(
+        predefinedPalettes[activePaletteTab] || predefinedPalettes.default
+      );
+    }
+  }, [activePaletteTab]);
+
+  useEffect(() => {
+    setTool("Color Palette");
+  }, []);
 
   const addToPalette = (color) => {
+    // Switch to custom tab when adding colors
+    setActivePaletteTab("custom");
+
     if (palette.includes(color)) return;
     if (palette.length >= 10) {
       setPalette([color, ...palette.slice(0, 9)]);
     } else {
       setPalette([color, ...palette]);
     }
-
-    // Add to history
     if (!colorHistory.includes(color)) {
       setColorHistory((prev) => [color, ...prev].slice(0, 20));
     }
   };
 
   const removePaletteColor = (colorToRemove) => {
+    // Switch to custom tab when removing colors
+    setActivePaletteTab("custom");
     setPalette(palette.filter((color) => color !== colorToRemove));
   };
 
   const copyToClipboard = (text, e) => {
     navigator.clipboard.writeText(text);
-
-    // Show tooltip
     setTooltipContent("Copied!");
     setTooltipPosition({ x: e.clientX, y: e.clientY });
     setShowTooltip(true);
-
     setTimeout(() => {
       setShowTooltip(false);
     }, 2000);
   };
-
-  useEffect(() => {
-    setTool("Color Palette");
-  }, []);
 
   const getGradientString = () => {
     if (gradientType === "linear") {
@@ -82,18 +125,14 @@ export default function ColorPalatte() {
       ],
       timestamp: new Date().toISOString(),
     };
-
     const blob = new Blob([JSON.stringify(data, null, 2)], {
       type: "application/json",
     });
     saveAs(blob, "Nexonware-palette.json");
     setShowExportModal(false);
-
-    // Show tooltip
     setTooltipContent("JSON Exported!");
     setTooltipPosition({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
     setShowTooltip(true);
-
     setTimeout(() => {
       setShowTooltip(false);
     }, 2000);
@@ -106,12 +145,10 @@ export default function ColorPalatte() {
     const colorBoxSize = 30;
     const colorBoxSpacing = 10;
 
-    // Add title
     doc.setFontSize(22);
     doc.setTextColor(30, 30, 30);
     doc.text("Color Palette", margin, margin);
 
-    // Add date
     doc.setFontSize(12);
     doc.setTextColor(100, 100, 100);
     doc.text(
@@ -120,21 +157,17 @@ export default function ColorPalatte() {
       margin + 10
     );
 
-    // Add divider
     doc.setDrawColor(200, 200, 200);
     doc.line(margin, margin + 15, pageWidth - margin, margin + 15);
 
-    // Add solid colors section
     doc.setFontSize(16);
     doc.setTextColor(30, 30, 30);
     doc.text("Solid Colors", margin, margin + 30);
 
-    // Draw color squares
     let yPosition = margin + 40;
     let xPosition = margin;
 
     palette.forEach((color, index) => {
-      // Convert hex to RGB for PDF
       const r = parseInt(color.slice(1, 3), 16);
       const g = parseInt(color.slice(3, 5), 16);
       const b = parseInt(color.slice(5, 7), 16);
@@ -142,45 +175,34 @@ export default function ColorPalatte() {
       doc.setFillColor(r, g, b);
       doc.rect(xPosition, yPosition, colorBoxSize, colorBoxSize, "F");
 
-      // Add color code below
       doc.setFontSize(10);
       doc.setTextColor(50, 50, 50);
       doc.text(color, xPosition, yPosition + colorBoxSize + 10);
 
-      // Update position for next color
       xPosition += colorBoxSize + colorBoxSpacing + 20;
-
-      // Move to next row if needed
       if (xPosition > pageWidth - margin - colorBoxSize) {
         xPosition = margin;
         yPosition += colorBoxSize + 20;
       }
     });
 
-    // Add gradient section
     yPosition += colorBoxSize + 40;
     doc.setFontSize(16);
     doc.setTextColor(30, 30, 30);
     doc.text("Gradient", margin, yPosition);
 
-    // Gradient info
     yPosition += 15;
     doc.setFontSize(12);
     doc.text(`Type: ${gradientType}`, margin, yPosition);
-
     if (gradientType === "linear") {
       yPosition += 10;
       doc.text(`Direction: ${gradientDirection}`, margin, yPosition);
     }
 
-    // Gradient colors
     yPosition += 20;
     doc.text("Colors:", margin, yPosition);
-
-    // Draw gradient color squares
     yPosition += 10;
 
-    // First color
     const r1 = parseInt(gradientColors[0].slice(1, 3), 16);
     const g1 = parseInt(gradientColors[0].slice(3, 5), 16);
     const b1 = parseInt(gradientColors[0].slice(5, 7), 16);
@@ -188,7 +210,6 @@ export default function ColorPalatte() {
     doc.rect(margin, yPosition, colorBoxSize, colorBoxSize, "F");
     doc.text(gradientColors[0], margin, yPosition + colorBoxSize + 10);
 
-    // Second color
     const r2 = parseInt(gradientColors[1].slice(1, 3), 16);
     const g2 = parseInt(gradientColors[1].slice(3, 5), 16);
     const b2 = parseInt(gradientColors[1].slice(5, 7), 16);
@@ -206,31 +227,28 @@ export default function ColorPalatte() {
       yPosition + colorBoxSize + 10
     );
 
-    // Footer
     doc.setFontSize(10);
     doc.setTextColor(100, 100, 100);
-
-    // Save PDF
     doc.save("Nexonware-palette.pdf");
-    setShowExportModal(false);
 
-    // Show tooltip
+    setShowExportModal(false);
     setTooltipContent("PDF Exported!");
     setTooltipPosition({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
     setShowTooltip(true);
-
     setTimeout(() => {
       setShowTooltip(false);
     }, 2000);
   };
 
   const generateComplementaryColors = () => {
+    // Switch to custom tab when generating colors
+    setActivePaletteTab("custom");
+
     const hex = currentColor.replace("#", "");
     const r = parseInt(hex.substr(0, 2), 16);
     const g = parseInt(hex.substr(2, 2), 16);
     const b = parseInt(hex.substr(4, 2), 16);
 
-    // Complementary color
     const rComp = 255 - r;
     const gComp = 255 - g;
     const bComp = 255 - b;
@@ -239,7 +257,6 @@ export default function ColorPalatte() {
       .toString(16)
       .slice(1)}`;
 
-    // Analogous colors
     const hsl = rgbToHsl(r, g, b);
     const h = hsl[0];
     const s = hsl[1];
@@ -257,7 +274,6 @@ export default function ColorPalatte() {
     ]);
   };
 
-  // Helper functions for color conversion
   const rgbToHsl = (r, g, b) => {
     r /= 255;
     g /= 255;
@@ -286,7 +302,6 @@ export default function ColorPalatte() {
           h = (r - g) / d + 4;
           break;
       }
-
       h /= 6;
     }
 
@@ -327,7 +342,6 @@ export default function ColorPalatte() {
 
   return (
     <div
-      className="min-h-screen"
       style={{
         widht: "auto",
       }}
@@ -335,35 +349,38 @@ export default function ColorPalatte() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="md:flex">
-            {/* Left panel */}
+            {/* Left Panel - Color Picker */}
             <div className="md:w-1/3 p-6 border-r border-gray-200">
               <div className="mb-6">
-                <h2 className="text-sm font-medium text-gray-900 mb-1">
+                <h2 className="text-xs font-medium text-gray-900 mb-1">
                   Color Picker
                 </h2>
                 <div className="flex justify-center mb-6">
                   <ChromePicker
+                    width={"100%"}
                     color={currentColor}
                     onChange={(color) => setCurrentColor(color.hex)}
                     disableAlpha={true}
                   />
                 </div>
-                <div className="flex flex-col items-center justify-center  gap-2">
-                  <button
-                    onClick={() => addToPalette(currentColor)}
-                    className=" w-full px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500"
-                  >
-                    Add to Palette
-                  </button>
-                  <button
-                    onClick={generateComplementaryColors}
-                    className="w-full px-4 py-2 bg-gray-800 text-white text-sm font-medium rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-500"
-                  >
-                    ✨ Generate Harmony
-                  </button>
-                </div>
+                {activePaletteTab == "custom" && (
+                  <div className="flex flex-col items-center justify-center gap-2">
+                    <button
+                      onClick={() => addToPalette(currentColor)}
+                      className="
+                    w-full px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500"
+                    >
+                      Add to Palette
+                    </button>
+                    <button
+                      onClick={generateComplementaryColors}
+                      className="w-full px-4 py-2 bg-gray-800 text-white text-sm font-medium rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-500"
+                    >
+                      ✨ Generate Harmony
+                    </button>
+                  </div>
+                )}
               </div>
-
               <div>
                 <h2 className="text-lg font-medium text-gray-900 mb-4">
                   {colorHistory?.length ? "Pick History" : ""}
@@ -382,7 +399,7 @@ export default function ColorPalatte() {
               </div>
             </div>
 
-            {/* Right panel */}
+            {/* Right Panel - Palette & Gradients */}
             <div className="md:w-2/3 p-6">
               <div className="mb-6">
                 <div className="flex border-b border-gray-200">
@@ -412,7 +429,7 @@ export default function ColorPalatte() {
               {activeTab === "solid" ? (
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-lg font-medium text-gray-900 mb-4">
+                    <h2 className="text-lg font-medium text-gray-900">
                       Your Palette
                     </h2>
                     <button
@@ -423,7 +440,51 @@ export default function ColorPalatte() {
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-5 gap-6 mt-12">
+                  {/* Palette Type Selector */}
+                  <div className="flex border-b border-gray-200 mb-6">
+                    <button
+                      className={`px-3 py-2 text-xs font-medium ${
+                        activePaletteTab === "custom"
+                          ? "text-blue-600 border-b-2 border-blue-600"
+                          : "text-gray-500 hover:text-gray-700"
+                      }`}
+                      onClick={() => setActivePaletteTab("custom")}
+                    >
+                      Your Selection
+                    </button>
+                    <button
+                      className={`px-3 py-2 text-xs font-medium ${
+                        activePaletteTab === "pastel"
+                          ? "text-blue-600 border-b-2 border-blue-600"
+                          : "text-gray-500 hover:text-gray-700"
+                      }`}
+                      onClick={() => setActivePaletteTab("pastel")}
+                    >
+                      Pastel
+                    </button>
+                    <button
+                      className={`px-3 py-2 text-xs font-medium ${
+                        activePaletteTab === "purple"
+                          ? "text-blue-600 border-b-2 border-blue-600"
+                          : "text-gray-500 hover:text-gray-700"
+                      }`}
+                      onClick={() => setActivePaletteTab("purple")}
+                    >
+                      Purple
+                    </button>
+                    <button
+                      className={`px-3 py-2 text-xs font-medium ${
+                        activePaletteTab === "orange"
+                          ? "text-blue-600 border-b-2 border-blue-600"
+                          : "text-gray-500 hover:text-gray-700"
+                      }`}
+                      onClick={() => setActivePaletteTab("orange")}
+                    >
+                      Orange
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-5 gap-6">
                     {palette.map((color, index) => {
                       return (
                         <div
@@ -458,6 +519,12 @@ export default function ColorPalatte() {
                         </div>
                       );
                     })}
+                    {palette.length < 1 && (
+                      <div className="col-span-8 text-center text-gray-500 font-sm pt-10">
+                        Your palette is empty. <br /> Pick colour from color
+                        picker and click "Add to Palette" button.
+                      </div>
+                    )}
                   </div>
                 </div>
               ) : (
@@ -470,7 +537,6 @@ export default function ColorPalatte() {
                       className="w-full h-40 rounded-md shadow-md mb-4"
                       style={{ background: getGradientString() }}
                     ></div>
-
                     <div className="grid grid-cols-2 gap-4 mb-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -485,7 +551,6 @@ export default function ColorPalatte() {
                           <option value="radial">Radial</option>
                         </select>
                       </div>
-
                       {gradientType === "linear" && (
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -514,7 +579,6 @@ export default function ColorPalatte() {
                         </div>
                       )}
                     </div>
-
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -538,7 +602,6 @@ export default function ColorPalatte() {
                           />
                         </div>
                       </div>
-
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           End Color
@@ -563,7 +626,6 @@ export default function ColorPalatte() {
                       </div>
                     </div>
                   </div>
-
                   <button
                     onClick={(e) => copyToClipboard(getGradientString(), e)}
                     className="w-full px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500"
@@ -577,7 +639,7 @@ export default function ColorPalatte() {
         </div>
       </main>
 
-      {/* Export modal */}
+      {/* Export Modal */}
       {showExportModal && (
         <div
           className="fixed inset-0 overflow-y-auto"
@@ -590,14 +652,12 @@ export default function ColorPalatte() {
               className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
               aria-hidden="true"
             ></div>
-
             <span
               className="hidden sm:inline-block sm:align-middle sm:h-screen"
               aria-hidden="true"
             >
               &#8203;
             </span>
-
             <div className="inline-block align-bottom bg-white rounded-md px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
               <div>
                 <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100">
@@ -675,13 +735,6 @@ export default function ColorPalatte() {
           {tooltipContent}
         </div>
       )}
-
-      <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="border-t border-gray-200 pt-6 text-center text-sm text-gray-500">
-          &copy; {new Date().getFullYear()} Nexonware. Premium Color Picker
-          Application.
-        </div>
-      </footer>
     </div>
   );
 }

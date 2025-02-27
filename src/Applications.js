@@ -19,8 +19,8 @@ export const allUtilities = {
       icon: "{;}",
     },
     {
-      id: "color-palatte",
-      title: "Color palatte",
+      id: "color-palette",
+      title: "Color palette",
       description: "Pick colors",
       icon: "🎨",
     },
