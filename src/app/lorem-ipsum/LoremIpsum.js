@@ -47,7 +47,7 @@ const LoremIpsumGenerator = () => {
           baseParagraph
             .split(". ")
             .slice(0, Math.floor(Math.random() * 3) + 5)
-            .join(". ") + ".";
+            .join(". ") + "...";
 
         result.push(paragraphText);
       }
@@ -81,7 +81,7 @@ const LoremIpsumGenerator = () => {
   };
 
   useEffect(() => {
-    setTool("Lorem Ipsum Generator");
+    setTool("Lorem Ipsum");
   }, []);
 
   return (
@@ -97,7 +97,7 @@ const LoremIpsumGenerator = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Number of Paragraphs
+                Number of paragraphs
               </label>
               <div className="flex items-center">
                 <button
@@ -201,7 +201,7 @@ const LoremIpsumGenerator = () => {
         </div>
       </div>
 
-      {generatedText && (
+      {generatedText && !isGenerating && (
         <div className="min-w-[42rem] max-w-2xl mt-6 bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="flex justify-between items-center px-6 py-4 bg-gray-50 border-b">
             <h2 className="text-lg font-medium text-gray-800">
@@ -211,7 +211,10 @@ const LoremIpsumGenerator = () => {
           </div>
           <div
             dangerouslySetInnerHTML={{
-              __html: generatedText.replace("..", ".<br />"),
+              __html: generatedText
+                .split(" ") // Split the string into words
+                .map((word) => word) // Shuffle letters in each word
+                .join(" "),
             }}
             className={`p-6 text-gray-700 ${fontFamily}`}
             style={{ fontSize }}
