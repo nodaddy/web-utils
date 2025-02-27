@@ -173,7 +173,7 @@ export default function Home() {
 
                       {/* Utility title and description */}
                       <div style={{ lineHeight: "1rem" }}>
-                        <h3 className="text-gray-800 font-medium group-hover:text-blue-600 transition-colors">
+                        <h3 className="text-gray-800 font-lg group-hover:text-blue-600 transition-colors">
                           {util.title}
                         </h3>
                         <span className="text-xs text-gray-500">

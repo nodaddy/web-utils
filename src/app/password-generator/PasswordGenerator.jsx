@@ -135,7 +135,7 @@ export default function Home() {
 
   return (
     <div
-      className={`min-h-screen flex flex-col items-center px-4 py-24 ${
+      className={`min-h-screen flex flex-col items-center px-4 py-32 text-gray-300 ${
         // darkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"
         ""
       }`}
@@ -152,7 +152,7 @@ export default function Home() {
               <span className="text-xl">🛡️</span>
               <h1 className="text-xl font-bold">Password Generator</h1>
             </div>
-            <button
+            {/* <button
               onClick={() => setDarkMode(!darkMode)}
               className={`p-2 rounded-full ${
                 darkMode
@@ -161,7 +161,7 @@ export default function Home() {
               }`}
             >
               {darkMode ? "🌙" : "☀️"}
-            </button>
+            </button> */}
           </div>
 
           {/* Password Display */}

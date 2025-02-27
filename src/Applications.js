@@ -24,6 +24,10 @@ export const allUtilities = {
       description: "Create color schemes",
       icon: "🎨",
     },
+  ],
+  "Developer Tools": [],
+  Productivity: [],
+  Lifestyle: [
     {
       id: "password-generator",
       title: "Secure Password Generator",
@@ -31,8 +35,6 @@ export const allUtilities = {
       icon: "🔒",
     },
   ],
-  "Developer Tools": [],
-  Productivity: [],
 };
 
 export default applicationNamesForGA;

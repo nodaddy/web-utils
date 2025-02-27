@@ -1,5 +1,6 @@
 // app/json-editor/page.tsx (or /pages/json-editor.tsx in Pages Router)
 import dynamic from "next/dynamic";
+import SeoContent from "./SeoContent";
 // import JsonFormatter from "./JsonFormatter";
 
 //  Dynamically import the client component
@@ -53,8 +54,12 @@ export const metadata = {
 export default function LoremIpsumPage() {
   return (
     <>
-      <div className="bg-[#f5f5f5] overflow:auto flex justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div
+        className={`text-gray-600 bg-[#f5f5f5] overflow:auto flex flex-col md:pl-16 md:flex-row justify-center bg-gradient-to-br from-blue-50 to-indigo-100`}
+      >
         <PasswordGenerator />
+
+        <SeoContent />
       </div>
     </>
   );
