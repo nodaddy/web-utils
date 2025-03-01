@@ -9,6 +9,7 @@ const URLEncoderDecoder = () => {
   const [history, setHistory] = useState([]);
   const [copied, setCopied] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
 
   // Process the URL based on the selected mode and charset
   useEffect(() => {
@@ -58,11 +59,7 @@ const URLEncoderDecoder = () => {
   // Swap input and output
   const swapFields = () => {
     setInput(output);
-    setMode(
-      mode.includes("encode")
-        ? mode.replace("encode", "decode")
-        : mode.replace("decode", "encode")
-    );
+    setMode(mode === "encode" ? "decode" : "encode");
   };
 
   // Download result as txt file
@@ -76,205 +73,202 @@ const URLEncoderDecoder = () => {
     document.body.removeChild(element);
   };
 
-  // Process example URLs
-  const processExample = (example) => {
-    setInput(example);
-  };
-
   return (
     <div className="flex flex-col w-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
+      {/* Compact Header with Toggle Info Button */}
+      <div className="bg-gradient-to-r from-blue-600 to-blue-800 p-3 text-white">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">URL Encoder/Decoder Tool</h1>
-          <button
-            onClick={() => setShowInfo(!showInfo)}
-            className="p-2 rounded-full hover:bg-white/20 transition-colors"
-            aria-label="Information"
-          >
-            ℹ️ Info.
-          </button>
+          <h1 className="text-xl font-bold">URL Encoder/Decoder Tool</h1>
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => setShowHistory(!showHistory)}
+              className="p-1 px-2 text-xs rounded bg-blue-700 hover:bg-blue-600 transition-colors"
+            >
+              {showHistory ? "Hide History" : "Show History"}
+            </button>
+            <button
+              onClick={() => setShowInfo(!showInfo)}
+              className="p-1 rounded-full hover:bg-white/20 transition-colors"
+              aria-label="Information"
+            >
+              ℹ️
+            </button>
+          </div>
         </div>
+
+        {/* Collapsible Info Panel */}
         {showInfo && (
-          <div className="mt-4 p-4 bg-white/10 rounded-lg text-sm">
-            <h2 className="font-bold mb-2">About this tool:</h2>
+          <div className="mt-2 p-2 bg-white/10 rounded-lg text-xs">
             <p>
-              This premium URL encoder/decoder tool helps you convert URLs and
-              text between different encoding formats. Features include:
+              This tool converts text between different encoding formats with
+              support for multiple character sets.
             </p>
-            <ul className="list-disc ml-5 mt-2 space-y-1">
-              <li>Multiple encoding/decoding methods</li>
-              <li>Character set selection for international support</li>
-              <li>History tracking</li>
-              <li>Copy, download, and share functionality</li>
-              <li>Real-time conversion</li>
-              <li>Error handling</li>
-            </ul>
           </div>
         )}
       </div>
 
-      <div className="p-6 grid grid-cols-1 gap-6">
-        {/* Mode and Charset Selection */}
-        <div className="w-full">
-          <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:justify-between">
-            {/* Mode Selection */}
-            <div className="overflow-x-auto">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Encoding Mode
-              </label>
-              <div className="flex space-x-2">
-                <button
-                  onClick={() => setMode("encode")}
-                  className={`px-3 py-2 text-sm rounded-md transition-colors ${
-                    mode === "encode"
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-100 hover:bg-gray-200"
-                  }`}
-                >
-                  URL Encode
-                </button>
-                <button
-                  onClick={() => setMode("decode")}
-                  className={`px-3 py-2 text-sm rounded-md transition-colors ${
-                    mode === "decode"
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-100 hover:bg-gray-200"
-                  }`}
-                >
-                  URL Decode
-                </button>
-              </div>
+      <div className="p-4 grid grid-cols-1 gap-3">
+        {/* Main Controls - Horizontally Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {/* Left Column: Mode Selection */}
+          <div className="flex flex-col">
+            <label className="text-xs font-medium text-gray-700 mb-1">
+              Mode
+            </label>
+            <div className="flex space-x-1">
+              <button
+                onClick={() => setMode("encode")}
+                className={`px-2 py-1 text-xs rounded-md ${
+                  mode === "encode"
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-100 hover:bg-gray-200"
+                }`}
+              >
+                Encode
+              </button>
+              <button
+                onClick={() => setMode("decode")}
+                className={`px-2 py-1 text-xs rounded-md ${
+                  mode === "decode"
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-100 hover:bg-gray-200"
+                }`}
+              >
+                Decode
+              </button>
+            </div>
+          </div>
+
+          {/* Right Column: Action Buttons */}
+          <div className="flex flex-col">
+            <label className="text-xs font-medium text-gray-700 mb-1">
+              Actions
+            </label>
+            <div className="flex space-x-1">
+              <button
+                onClick={swapFields}
+                className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+              >
+                🔄 Swap
+              </button>
+              <button
+                onClick={clearFields}
+                className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+              >
+                Reset
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Input Box */}
-        <div className="relative">
-          <label
-            htmlFor="input"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Input
-          </label>
-          <textarea
-            id="input"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder={`Enter text to ${mode}...`}
-            className="w-full h-32 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-          <div className="absolute bottom-2 right-2 flex space-x-1">
-            <button
-              onClick={clearFields}
-              className="p-1 text-sm text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-md"
-              aria-label="Clear"
+        {/* Input/Output Section - Side by Side on Larger Screens */}
+        <div className="grid mt-4 grid-cols-1 md:grid-cols-2 gap-3">
+          {/* Input Box */}
+          <div className="relative">
+            <label
+              htmlFor="input"
+              className="block text-xs font-medium text-gray-700 mb-1"
             >
-              Reset
-            </button>
+              Input
+            </label>
+            <textarea
+              id="input"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder={`Enter text to ${mode}...`}
+              className="w-full h-24 p-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Output Box */}
+          <div className="relative">
+            <label
+              htmlFor="output"
+              className="block text-xs font-medium text-gray-700 mb-1"
+            >
+              Output
+            </label>
+            <textarea
+              id="output"
+              value={output}
+              readOnly
+              className="w-full h-24 p-2 text-sm bg-gray-50 border border-gray-300 rounded-md focus:outline-none"
+            />
+            <div className="absolute bottom-1 right-1 flex space-x-1">
+              <button
+                onClick={copyToClipboard}
+                className="p-1 text-xs text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-md"
+              >
+                {copied ? "✅" : "📋"}
+              </button>
+              <button
+                onClick={downloadResult}
+                className="p-1 text-xs text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-md"
+              >
+                💾
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex justify-center space-x-2">
-          <button
-            onClick={addToHistory}
-            className="px-4 py-1 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors flex items-center space-x-1"
-          >
-            <span className="mr-1">⚙️</span>
-            <span>{mode === "encode" ? "Encode" : "Decode"}</span>
-          </button>
-          <button
-            onClick={swapFields}
-            className="px-4 py-1 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors flex items-center space-x-1"
-          >
-            <span className="mr-1">🔄</span>
-            <span>Swap</span>
-          </button>
-        </div>
-
-        {/* Output Box */}
-        <div className="relative">
-          <label
-            htmlFor="output"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Output
-          </label>
-          <textarea
-            id="output"
-            value={output}
-            readOnly
-            className="w-full h-32 p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none"
-          />
-          <div className="absolute bottom-2 right-2 flex space-x-1">
-            <button
-              onClick={copyToClipboard}
-              className="p-1 text-sm text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-md"
-              aria-label="Copy"
-            >
-              {copied ? "✅ Copied" : "📋 Copy"}
-            </button>
-            &nbsp; &nbsp;
-            <button
-              onClick={downloadResult}
-              className="p-1 text-sm text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-md"
-              aria-label="Download"
-            >
-              💾 &nbsp;Download as File
-            </button>
-          </div>
-        </div>
-
-        {/* History */}
-        {history.length > 0 && (
-          <div className="border-t pt-4 mt-2">
-            <h3 className="text-sm font-medium text-gray-700 mb-2">
-              Recent History
-            </h3>
-            <div className="max-h-64 overflow-y-auto">
-              {history.map((entry) => (
-                <div
-                  key={entry.id}
-                  className="p-3 mb-2 bg-gray-50 border border-gray-200 rounded-md"
-                >
-                  <div className="flex justify-between text-xs text-gray-500 mb-1">
-                    <span>
-                      {entry.mode} ({entry.charset})
-                    </span>
-                    <span>{entry.timestamp}</span>
-                  </div>
-                  <div className="text-sm truncate" title={entry.input}>
-                    Input: {entry.input}
-                  </div>
-                  <div className="text-sm truncate" title={entry.output}>
-                    Output: {entry.output}
-                  </div>
-                  <div className="flex justify-end mt-2 space-x-1">
-                    <button
-                      onClick={() => {
-                        setInput(entry.input);
-                        setMode(entry.mode);
-                        setCharset(entry.charset);
-                      }}
-                      className="p-1 text-xs text-blue-500 hover:text-blue-700"
+        {/* Collapsible History Section */}
+        {showHistory && history.length > 0 && (
+          <div className="border-t pt-2 mt-2">
+            <div className="max-h-48 overflow-y-auto">
+              <table className="w-full text-xs border-collapse">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="p-1 text-left">Time</th>
+                    <th className="p-1 text-left">Mode</th>
+                    <th className="p-1 text-left">Input</th>
+                    <th className="p-1 text-left">Output</th>
+                    <th className="p-1 text-left">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {history.map((entry) => (
+                    <tr
+                      key={entry.id}
+                      className="border-b border-gray-100 hover:bg-gray-50"
                     >
-                      Reuse
-                    </button>
-                  </div>
-                </div>
-              ))}
+                      <td className="p-1">{entry.timestamp.split(", ")[1]}</td>
+                      <td className="p-1">{entry.mode}</td>
+                      <td
+                        className="p-1 truncate max-w-[100px]"
+                        title={entry.input}
+                      >
+                        {entry.input}
+                      </td>
+                      <td
+                        className="p-1 truncate max-w-[100px]"
+                        title={entry.output}
+                      >
+                        {entry.output}
+                      </td>
+                      <td className="p-1">
+                        <button
+                          onClick={() => {
+                            setInput(entry.input);
+                            setMode(entry.mode);
+                            setCharset(entry.charset);
+                          }}
+                          className="p-1 text-xs text-blue-500 hover:text-blue-700"
+                        >
+                          Reuse
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         )}
       </div>
 
-      {/* Footer */}
-      <div className="bg-gray-50 p-4 text-center text-xs text-gray-500 border-t">
-        <p>
-          Premium URL Encoder/Decoder Tool • Encode and decode URLs with
-          confidence • Supports multiple character sets
-        </p>
+      {/* Compact Footer */}
+      <div className="bg-gray-50 p-2 text-center text-xs text-gray-500 border-t">
+        URL Encoder/Decoder Tool • {charset} • {new Date().getFullYear()}
       </div>
     </div>
   );
