@@ -172,7 +172,7 @@ export default function Base64EncoderDecoder() {
               <div className="flex justify-between items-center mb-2">
                 <label
                   htmlFor="input"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-md font-bold text-gray-700"
                 >
                   {mode === "encode" ? "Text to Encode" : "Base64 to Decode"}
                 </label>
@@ -297,7 +297,7 @@ export default function Base64EncoderDecoder() {
               <div className="flex justify-between items-center mb-2">
                 <label
                   htmlFor="output"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-md font-bold text-gray-700"
                 >
                   {mode === "encode" ? "Base64 Result" : "Decoded Result"}
                 </label>
