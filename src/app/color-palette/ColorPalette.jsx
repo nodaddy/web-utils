@@ -4,6 +4,8 @@ import { ChromePicker } from "react-color";
 import { saveAs } from "file-saver";
 import { jsPDF } from "jspdf";
 import { useAppContext } from "@/Context/AppContext";
+import { logGAEvent } from "../googleAnalytics/gaEvents";
+import applicationNamesForGA from "@/Applications";
 
 export default function Colorpalette() {
   const [currentColor, setCurrentColor] = useState("#B2FFFF");
@@ -60,6 +62,14 @@ export default function Colorpalette() {
       "#E9967A", // Dark Salmon
     ],
   };
+
+  useEffect(() => {
+    if (activePaletteTab) {
+      logGAEvent(applicationNamesForGA.colorPalette + "_change_palette_tab", {
+        activePaletteTab,
+      });
+    }
+  }, [activePaletteTab]);
 
   // Load predefined palette when tab changes
   useEffect(() => {
@@ -366,14 +376,26 @@ export default function Colorpalette() {
                 {activePaletteTab == "custom" && (
                   <div className="flex flex-col items-center justify-center gap-2">
                     <button
-                      onClick={() => addToPalette(currentColor)}
+                      onClick={() => {
+                        logGAEvent(
+                          applicationNamesForGA.colorPalette +
+                            "_click_add_to_palette"
+                        );
+                        addToPalette(currentColor);
+                      }}
                       className="
                     w-full px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500"
                     >
                       Add to Palette
                     </button>
                     <button
-                      onClick={generateComplementaryColors}
+                      onClick={() => {
+                        logGAEvent(
+                          applicationNamesForGA.colorPalette +
+                            "_click_generate_harmony"
+                        );
+                        generateComplementaryColors();
+                      }}
                       className="w-full px-4 py-2 bg-gray-800 text-white text-sm font-medium rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-500"
                     >
                       ✨ Generate Harmony

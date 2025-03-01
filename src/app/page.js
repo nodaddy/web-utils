@@ -160,14 +160,14 @@ export default function Home() {
             <div className=" grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-1 mt-11">
               {displayedUtilities.length > 0 ? (
                 displayedUtilities.map((util) => (
-                  <div key={util.id} className="py-1">
+                  <div key={util.id} className="py-1 my-2">
                     <Link
                       href={`/${util.id}`}
                       target="_blank"
                       className="flex items-end group gap-1"
                     >
                       {/* Utility icon */}
-                      <div className="mr-1.5 text-2xl text-gray-500 border bg-gray-200 p-2 rounded-lg">
+                      <div className="mr-1.5 text-2xl text-gray-400 border bg-gray-200 px-2 py-1 rounded-lg">
                         {util.icon}
                       </div>
 

@@ -1,6 +1,9 @@
 const applicationNamesForGA = {
   jsonFormatterViewer: "json-formatter",
   textGenerator: "text-generator",
+  passwordGenerator: "password-Generator",
+  colorPalette: "color-palette",
+  convertCase: "convert-case",
 };
 
 export const allUtilities = {
@@ -16,7 +19,7 @@ export const allUtilities = {
       id: "json-formatter",
       title: "JSON Formatter",
       description: "Format and validate JSON data",
-      icon: "{;}",
+      icon: "📜",
     },
     {
       id: "color-palette",
@@ -33,6 +36,14 @@ export const allUtilities = {
       title: "Secure Password Generator",
       description: "Generate strong passwords",
       icon: "🔒",
+    },
+  ],
+  "Text Tools": [
+    {
+      id: "convert-case",
+      title: "Case converter",
+      description: "Instanly Convert Text Case",
+      icon: "🔡",
     },
   ],
 };

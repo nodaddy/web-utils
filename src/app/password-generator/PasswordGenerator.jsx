@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import { useAppContext } from "@/Context/AppContext";
+import { logGAEvent } from "../googleAnalytics/gaEvents";
+import applicationNamesForGA from "@/Applications";
 
 export default function Home() {
   const [password, setPassword] = useState("");
@@ -209,7 +211,13 @@ export default function Home() {
           {/* Primary Controls */}
           <div className="flex items-center mb-8">
             <button
-              onClick={generatePassword}
+              onClick={() => {
+                logGAEvent(
+                  applicationNamesForGA.passwordGenerator +
+                    "_click_generate_password"
+                );
+                generatePassword();
+              }}
               className="flex-grow flex items-center justify-center py-3 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-md"
             >
               <span className="mr-2">🔄</span>
