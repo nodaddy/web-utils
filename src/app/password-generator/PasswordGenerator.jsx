@@ -141,11 +141,7 @@ export default function Home() {
       }`}
     >
       <main className="w-full max-w-md">
-        <div
-          className={`p-6 rounded-xl shadow-xl ${
-            darkMode ? "bg-gray-800" : "bg-white"
-          }`}
-        >
+        <div className={`p-6 rounded-xl shadow-xl ${"bg-gray-800"}`}>
           {/* Header */}
           <div className="flex justify-between mb-6">
             <div className="flex items-center space-x-2">
