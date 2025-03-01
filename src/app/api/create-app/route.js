@@ -308,7 +308,7 @@ function createMetadataFile(appRoute, seoContent, pk, sk) {
           url: "https://nexonware.com/assets/tools.png",
           width: 1200,
           height: 630,
-          alt: "",
+          alt: appRoute.replaceAll("-", " ") + " preview",
         },
       ],
     };
@@ -350,7 +350,7 @@ import React from 'react';
 const DescriptionWithSEO = () => {
   return (
     <div className="seo-content my-8 mx-auto max-w-3xl prose prose-lg">
-      ${seoContent}
+      ${seoContent.replaceAll("class=", "className=")}
     </div>
   );
 };

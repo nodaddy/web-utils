@@ -1,5 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { logGAEvent } from "../googleAnalytics/gaEvents";
+import applicationNamesForGA from "../../Applications";
+import { useAppContext } from "../../Context/AppContext";
 
 const URLEncoderDecoder = () => {
   const [input, setInput] = useState("");
@@ -11,8 +14,11 @@ const URLEncoderDecoder = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
 
+  const { setTool } = useAppContext();
+
   // Process the URL based on the selected mode and charset
   useEffect(() => {
+    setTool("URL Encode/Decode");
     try {
       if (input) {
         if (mode === "encode") {
@@ -174,7 +180,12 @@ const URLEncoderDecoder = () => {
             <textarea
               id="input"
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e) => {
+                logGAEvent(
+                  applicationNamesForGA.URLEncoderDecoder + "_input_change"
+                );
+                setInput(e.target.value);
+              }}
               placeholder={`Enter text to ${mode}...`}
               className="w-full h-24 p-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
@@ -196,16 +207,23 @@ const URLEncoderDecoder = () => {
             />
             <div className="absolute bottom-1 right-1 flex space-x-1">
               <button
-                onClick={copyToClipboard}
+                onClick={() => {
+                  copyToClipboard();
+
+                  logGAEvent(
+                    applicationNamesForGA.URLEncoderDecoder + "_click_copy"
+                  );
+                }}
                 className="p-1 text-xs text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-md"
               >
-                {copied ? "✅" : "📋"}
+                {copied ? "✅ Copied" : "📋 Copy"}
               </button>
+              &nbsp;
               <button
                 onClick={downloadResult}
                 className="p-1 text-xs text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-md"
               >
-                💾
+                💾&nbsp; Download
               </button>
             </div>
           </div>

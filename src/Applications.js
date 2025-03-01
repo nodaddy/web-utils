@@ -1,9 +1,14 @@
+import Base64EncoderDecoder from "./app/base64-encode-decode/App";
+import URLEncoderDecoder from "./app/url-encode-decode/App";
+
 const applicationNamesForGA = {
   jsonFormatterViewer: "json-formatter",
   textGenerator: "text-generator",
   passwordGenerator: "password-Generator",
   colorPalette: "color-palette",
   convertCase: "convert-case",
+  URLEncoderDecoder: "url-encode-decode",
+  Base64EncoderDecoder: "base64-encode-decode",
 };
 
 export const allUtilities = {
@@ -51,6 +56,12 @@ export const allUtilities = {
       title: "Case converter",
       description: "Instanly Convert Text Case",
       icon: "🔡",
+    },
+    {
+      id: "base64-encode-decode",
+      title: "Base64 Encode Decode",
+      description: "Encode and decode base64 strings",
+      icon: "🤖",
     },
   ],
 };
