@@ -1,8 +1,8 @@
 "use client";
-import { useAppContext } from "../../Context/AppContext";
+import { useAppContext } from "../Context/AppContext";
 import React, { useEffect, useState } from "react";
 import { logGAEvent } from "../googleAnalytics/gaEvents";
-import applicationNamesForGA from "../../Applications";
+import applicationNamesForGA from "../Applications";
 
 const CaseConverter = () => {
   const [text, setText] = useState("");

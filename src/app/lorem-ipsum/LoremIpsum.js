@@ -1,8 +1,8 @@
 "use client";
-import { useAppContext } from "@/Context/AppContext";
+import { useAppContext } from "../../Context/AppContext";
 import { useEffect, useState } from "react";
 import { logGAEvent } from "../googleAnalytics/gaEvents";
-import applicationNamesForGA from "@/Applications";
+import applicationNamesForGA from "../../Applications";
 import CopyButton from "./CopyButton";
 
 // More extensive lorem ipsum text in different languages

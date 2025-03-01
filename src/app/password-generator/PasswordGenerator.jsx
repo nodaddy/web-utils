@@ -1,386 +1,420 @@
 "use client";
-// pages/index.js
-import { useState, useEffect } from "react";
-import Head from "next/head";
-import { useAppContext } from "@/Context/AppContext";
-import { logGAEvent } from "../googleAnalytics/gaEvents";
-import applicationNamesForGA from "@/Applications";
 
-export default function Home() {
+import React, { useState, useEffect } from "react";
+
+const PasswordGenerator = () => {
   const [password, setPassword] = useState("");
   const [length, setLength] = useState(16);
   const [includeUppercase, setIncludeUppercase] = useState(true);
   const [includeLowercase, setIncludeLowercase] = useState(true);
   const [includeNumbers, setIncludeNumbers] = useState(true);
   const [includeSymbols, setIncludeSymbols] = useState(true);
-  const [copied, setCopied] = useState(false);
-  const [strength, setStrength] = useState(0);
-  const [recentPasswords, setRecentPasswords] = useState([]);
-  const [darkMode, setDarkMode] = useState(false);
-  const [showSettings, setShowSettings] = useState(true);
+  const [passwordStrength, setPasswordStrength] = useState("");
+  const [isCopied, setIsCopied] = useState(false);
+  const [error, setError] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [history, setHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
 
-  const { setTool } = useAppContext();
-
-  // Generate password on component mount and when options change
+  // Generate password on initial load and when settings change
   useEffect(() => {
     generatePassword();
-  }, [
-    length,
-    includeUppercase,
-    includeLowercase,
-    includeNumbers,
-    includeSymbols,
-  ]);
+  }, []);
 
   // Calculate password strength
   useEffect(() => {
-    setTool("Secure Password Generator");
+    if (password) {
+      const strength = calculatePasswordStrength(password);
+      setPasswordStrength(strength);
+    }
+  }, [password]);
+
+  const calculatePasswordStrength = (pwd) => {
     let score = 0;
 
-    // Length factor
-    if (length >= 12) score += 2;
-    else if (length >= 8) score += 1;
+    // Length check
+    if (pwd.length >= 12) score += 2;
+    else if (pwd.length >= 8) score += 1;
 
-    // Character types factor
-    if (includeUppercase) score += 1;
-    if (includeLowercase) score += 1;
-    if (includeNumbers) score += 1;
-    if (includeSymbols) score += 1;
+    // Character variety checks
+    if (/[A-Z]/.test(pwd)) score += 1;
+    if (/[a-z]/.test(pwd)) score += 1;
+    if (/[0-9]/.test(pwd)) score += 1;
+    if (/[^A-Za-z0-9]/.test(pwd)) score += 1;
 
-    // Variety factor (simple estimation)
-    const hasUpper = /[A-Z]/.test(password);
-    const hasLower = /[a-z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-    const hasSymbol = /[^A-Za-z0-9]/.test(password);
+    // Pattern checks
+    if (!/(.)\1{2,}/.test(pwd)) score += 1; // No character repeats 3+ times
 
-    const typesUsed = [hasUpper, hasLower, hasNumber, hasSymbol].filter(
-      Boolean
-    ).length;
-    score += typesUsed;
-
-    setStrength(Math.min(Math.floor(score / 2), 4));
-  }, [
-    password,
-    length,
-    includeUppercase,
-    includeLowercase,
-    includeNumbers,
-    includeSymbols,
-  ]);
-
-  // Check for dark mode preference
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setDarkMode(window.matchMedia("(prefers-color-scheme: dark)").matches);
-
-      // Load saved passwords from localStorage
-      const saved = localStorage.getItem("recentPasswords");
-      if (saved) {
-        setRecentPasswords(JSON.parse(saved));
-      }
-    }
-  }, []);
-
-  // Save recent passwords to localStorage
-  useEffect(() => {
-    if (recentPasswords.length > 0) {
-      localStorage.setItem("recentPasswords", JSON.stringify(recentPasswords));
-    }
-  }, [recentPasswords]);
-
-  const generatePassword = () => {
-    let charset = "";
-    let newPassword = "";
-
-    if (includeUppercase) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    if (includeLowercase) charset += "abcdefghijklmnopqrstuvwxyz";
-    if (includeNumbers) charset += "0123456789";
-    if (includeSymbols) charset += "!@#$%^&*()_-+=<>?";
-
-    if (charset === "") {
-      // Default to lowercase if nothing selected
-      charset = "abcdefghijklmnopqrstuvwxyz";
-      setIncludeLowercase(true);
-    }
-
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * charset.length);
-      newPassword += charset[randomIndex];
-    }
-
-    setPassword(newPassword);
-    setCopied(false);
-  };
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(password).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-
-      // Add to recent passwords
-      if (!recentPasswords.includes(password)) {
-        const updatedPasswords = [password, ...recentPasswords.slice(0, 4)];
-        setRecentPasswords(updatedPasswords);
-      }
-    });
-  };
-
-  const getStrengthLabel = () => {
-    const labels = ["Very Weak", "Weak", "Moderate", "Strong", "Very Strong"];
-    return labels[strength];
+    // Return strength label based on score
+    if (score >= 6) return "Strong";
+    if (score >= 4) return "Medium";
+    return "Weak";
   };
 
   const getStrengthColor = () => {
-    const colors = ["#ff4d4d", "#ffaa00", "#ffdd00", "#00cc44", "#00aaff"];
-    return colors[strength];
+    switch (passwordStrength) {
+      case "Strong":
+        return "bg-green-500";
+      case "Medium":
+        return "bg-yellow-500";
+      case "Weak":
+        return "bg-red-500";
+      default:
+        return "bg-gray-300";
+    }
+  };
+
+  const generatePassword = () => {
+    setError("");
+    setIsCopied(false);
+
+    // Validate that at least one character type is selected
+    if (
+      !includeUppercase &&
+      !includeLowercase &&
+      !includeNumbers &&
+      !includeSymbols
+    ) {
+      setError("Please select at least one character type");
+      return;
+    }
+
+    setIsGenerating(true);
+
+    try {
+      setTimeout(() => {
+        const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+        const numberChars = "0123456789";
+        const symbolChars = "!@#$%^&*()-_=+[]{}|;:,.<>?/";
+
+        let allowedChars = "";
+        if (includeUppercase) allowedChars += uppercaseChars;
+        if (includeLowercase) allowedChars += lowercaseChars;
+        if (includeNumbers) allowedChars += numberChars;
+        if (includeSymbols) allowedChars += symbolChars;
+
+        // Ensure at least one character from each selected type
+        let newPassword = "";
+
+        if (includeUppercase) {
+          newPassword += uppercaseChars.charAt(
+            Math.floor(Math.random() * uppercaseChars.length)
+          );
+        }
+
+        if (includeLowercase) {
+          newPassword += lowercaseChars.charAt(
+            Math.floor(Math.random() * lowercaseChars.length)
+          );
+        }
+
+        if (includeNumbers) {
+          newPassword += numberChars.charAt(
+            Math.floor(Math.random() * numberChars.length)
+          );
+        }
+
+        if (includeSymbols) {
+          newPassword += symbolChars.charAt(
+            Math.floor(Math.random() * symbolChars.length)
+          );
+        }
+
+        // Fill the rest of the password
+        for (let i = newPassword.length; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * allowedChars.length);
+          newPassword += allowedChars[randomIndex];
+        }
+
+        // Shuffle the password to randomize the guaranteed characters
+        newPassword = newPassword
+          .split("")
+          .sort(() => Math.random() - 0.5)
+          .join("");
+
+        setPassword(newPassword);
+
+        // Add to history (limiting to 5 items)
+        setHistory((prev) => [newPassword, ...prev].slice(0, 5));
+
+        setIsGenerating(false);
+      }, 500); // Simulate processing time for UI feedback
+    } catch (err) {
+      setError("Failed to generate password. Please try again.");
+      setIsGenerating(false);
+    }
+  };
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(password);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (err) {
+      setError("Failed to copy password. Please try manually.");
+    }
+  };
+
+  const usePassword = (pwd) => {
+    setPassword(pwd);
+    setIsCopied(false);
   };
 
   return (
-    <div
-      className={`min-h-screen flex flex-col items-center px-4 py-32 text-gray-300 ${
-        // darkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"
-        ""
-      }`}
-    >
-      <main className="w-full max-w-md">
-        <div className={`p-6 rounded-xl shadow-xl ${"bg-gray-800"}`}>
-          {/* Header */}
-          <div className="flex justify-between mb-6">
-            <div className="flex items-center space-x-2">
-              <span className="text-xl">🛡️</span>
-              <h1 className="text-xl font-bold">Password Generator</h1>
-            </div>
-            {/* <button
-              onClick={() => setDarkMode(!darkMode)}
-              className={`p-2 rounded-full ${
-                darkMode
-                  ? "bg-gray-700 hover:bg-gray-600"
-                  : "bg-gray-100 hover:bg-gray-200"
-              }`}
-            >
-              {darkMode ? "🌙" : "☀️"}
-            </button> */}
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white flex flex-col items-center justify-start pt-28 p-4">
+      <div className="w-full max-w-md bg-gray-800 rounded-xl shadow-2xl overflow-hidden">
+        <div className="p-6">
+          <div className="flex items-center justify-center space-x-2 mb-6">
+            <span role="img" aria-label="lock" className="text-2xl">
+              🔐
+            </span>
+            <h1 className="text-2xl font-bold text-center">
+              Secure Password Generator
+            </h1>
           </div>
 
-          {/* Password Display */}
-          <div
-            className={`relative p-4 rounded-lg mb-6 flex items-center justify-between ${
-              darkMode ? "bg-gray-700" : "bg-gray-100"
-            }`}
-          >
-            <div className="font-mono text-lg break-all flex-grow mr-2 bg-white text-gray-800 pl-2">
-              {password}
+          {error && (
+            <div className="bg-red-500 bg-opacity-20 border border-red-500 text-red-300 px-4 py-2 rounded-lg mb-4">
+              <p className="flex items-center">
+                <span role="img" aria-label="warning" className="mr-2">
+                  ⚠️
+                </span>
+                {error}
+              </p>
             </div>
-            <button
-              onClick={copyToClipboard}
-              className={`p-2 rounded-md transition-colors ${
-                darkMode ? "hover:bg-gray-600" : "hover:bg-gray-200"
-              }`}
-              aria-label="Copy password"
-            >
-              {copied ? (
-                <span className="text-green-500">✓</span>
-              ) : (
-                <span className="text-gray-200">copy</span>
-              )}
-            </button>
+          )}
+
+          <div className="relative bg-gray-700 rounded-lg p-4 mb-6">
+            <div className="flex items-center justify-between">
+              <input
+                type="text"
+                value={password}
+                readOnly
+                className="w-full bg-transparent border-none text-white text-lg font-mono focus:outline-none"
+                aria-label="Generated password"
+              />
+              <div className="flex space-x-2">
+                <button
+                  onClick={copyToClipboard}
+                  className="text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 p-2 rounded transition-colors"
+                  aria-label="Copy to clipboard"
+                  title="Copy to clipboard"
+                >
+                  {isCopied ? (
+                    <span
+                      role="img"
+                      aria-label="copied"
+                      className="text-green-400"
+                    >
+                      ✅
+                    </span>
+                  ) : (
+                    <span role="img" aria-label="copy">
+                      📋
+                    </span>
+                  )}
+                </button>
+                <button
+                  onClick={generatePassword}
+                  disabled={isGenerating}
+                  className="text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 p-2 rounded transition-colors"
+                  aria-label="Generate new password"
+                  title="Generate new password"
+                >
+                  <span role="img" aria-label="refresh">
+                    🔄
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-2">
+              <div className="flex items-center space-x-2">
+                <div className="text-sm">Strength:</div>
+                <div
+                  className={`px-2 py-1 rounded text-xs ${getStrengthColor()}`}
+                >
+                  {passwordStrength || "N/A"}
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Strength Indicator */}
-          <div className="mb-6">
-            <div className="flex justify-between mb-2">
-              <span className="text-sm">Password Strength</span>
-              <span
-                className="text-sm font-semibold"
-                style={{ color: getStrengthColor() }}
+          <div className="space-y-4 mb-6">
+            <div>
+              <label
+                htmlFor="length"
+                className="block text-sm font-medium mb-1"
               >
-                {getStrengthLabel()}
-              </span>
-            </div>
-            <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-              <div
-                className="h-full rounded-full transition-all duration-300"
-                style={{
-                  width: `${(strength + 1) * 20}%`,
-                  backgroundColor: getStrengthColor(),
-                }}
-              ></div>
-            </div>
-          </div>
-
-          {/* Primary Controls */}
-          <div className="flex items-center mb-8">
-            <button
-              onClick={() => {
-                logGAEvent(
-                  applicationNamesForGA.passwordGenerator +
-                    "_click_generate_password"
-                );
-                generatePassword();
-              }}
-              className="flex-grow flex items-center justify-center py-3 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-md"
-            >
-              <span className="mr-2">🔄</span>
-              Generate New Password
-            </button>
-            <button
-              onClick={() => setShowSettings(!showSettings)}
-              className={`ml-3 p-3 rounded-lg ${
-                darkMode
-                  ? "bg-gray-700 hover:bg-gray-600"
-                  : "bg-gray-100 hover:bg-gray-200"
-              }`}
-            >
-              <span className="text-gray-500">⚙️</span>
-            </button>
-          </div>
-
-          {/* Settings */}
-          <div
-            className={`transition-all duration-300 overflow-hidden ${
-              showSettings ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-            }`}
-          >
-            <div className="mb-4">
-              <label className="block mb-2 text-sm font-medium">
                 Password Length: {length}
               </label>
-              <div className="flex items-center">
-                <span className="text-xs mr-2">8</span>
+              <div className="flex items-center space-x-2">
+                <span className="text-xs">8</span>
                 <input
+                  id="length"
                   type="range"
                   min="8"
                   max="32"
                   value={length}
                   onChange={(e) => setLength(parseInt(e.target.value))}
-                  className="flex-grow h-2 rounded-lg appearance-none cursor-pointer bg-gray-200"
+                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                  aria-label="Password length slider"
                 />
-                <span className="text-xs ml-2">32</span>
+                <span className="text-xs">32</span>
               </div>
             </div>
 
-            <div className="space-y-3 mb-6">
+            <div className="grid grid-cols-2 gap-4">
               <div className="flex items-center">
                 <input
                   id="uppercase"
                   type="checkbox"
                   checked={includeUppercase}
-                  onChange={() => setIncludeUppercase(!includeUppercase)}
-                  className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  onChange={(e) => setIncludeUppercase(e.target.checked)}
+                  className="w-4 h-4 rounded border-gray-600 text-blue-600 focus:ring-blue-500"
+                  aria-label="Include uppercase letters"
                 />
                 <label htmlFor="uppercase" className="ml-2 text-sm">
-                  Include Uppercase (A-Z)
+                  Uppercase (A-Z)
                 </label>
               </div>
+
               <div className="flex items-center">
                 <input
                   id="lowercase"
                   type="checkbox"
                   checked={includeLowercase}
-                  onChange={() => setIncludeLowercase(!includeLowercase)}
-                  className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  onChange={(e) => setIncludeLowercase(e.target.checked)}
+                  className="w-4 h-4 rounded border-gray-600 text-blue-600 focus:ring-blue-500"
+                  aria-label="Include lowercase letters"
                 />
                 <label htmlFor="lowercase" className="ml-2 text-sm">
-                  Include Lowercase (a-z)
+                  Lowercase (a-z)
                 </label>
               </div>
+
               <div className="flex items-center">
                 <input
                   id="numbers"
                   type="checkbox"
                   checked={includeNumbers}
-                  onChange={() => setIncludeNumbers(!includeNumbers)}
-                  className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  onChange={(e) => setIncludeNumbers(e.target.checked)}
+                  className="w-4 h-4 rounded border-gray-600 text-blue-600 focus:ring-blue-500"
+                  aria-label="Include numbers"
                 />
                 <label htmlFor="numbers" className="ml-2 text-sm">
-                  Include Numbers (0-9)
+                  Numbers (0-9)
                 </label>
               </div>
+
               <div className="flex items-center">
                 <input
                   id="symbols"
                   type="checkbox"
                   checked={includeSymbols}
-                  onChange={() => setIncludeSymbols(!includeSymbols)}
-                  className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  onChange={(e) => setIncludeSymbols(e.target.checked)}
+                  className="w-4 h-4 rounded border-gray-600 text-blue-600 focus:ring-blue-500"
+                  aria-label="Include symbols"
                 />
                 <label htmlFor="symbols" className="ml-2 text-sm">
-                  Include Symbols (!@#$%^&*)
+                  Symbols (!@#$%^&*)
                 </label>
               </div>
             </div>
           </div>
 
-          {/* Recent Passwords */}
-          {recentPasswords.length > 0 && (
+          <button
+            onClick={generatePassword}
+            disabled={isGenerating}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg py-3 px-4 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50"
+            aria-label="Generate password button"
+          >
+            {isGenerating ? (
+              <span className="flex items-center justify-center">
+                <svg
+                  className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Generating...
+              </span>
+            ) : (
+              "Generate Password"
+            )}
+          </button>
+
+          {history.length > 0 && (
             <div className="mt-6">
-              <div className="flex items-center mb-3">
-                <h3 className="text-sm font-medium">Recent Passwords</h3>
-                <span className="ml-2 text-xs px-2 py-1 rounded-full bg-indigo-100 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-300">
-                  {recentPasswords.length}
-                </span>
-              </div>
-              <div
-                className={`space-y-2 p-3 rounded-lg ${
-                  darkMode ? "bg-gray-700" : "bg-gray-100"
-                }`}
+              <button
+                onClick={() => setShowHistory(!showHistory)}
+                className="flex items-center text-sm text-gray-300 hover:text-white"
               >
-                {recentPasswords.map((pwd, index) => (
-                  <div
-                    key={index}
-                    className="flex justify-between items-center"
-                  >
-                    <div className="font-mono text-xs truncate max-w-xs">
-                      {pwd}
-                    </div>
-                    <button
-                      onClick={() => {
-                        navigator.clipboard.writeText(pwd);
-                        setCopied(true);
-                        setTimeout(() => setCopied(false), 2000);
-                      }}
-                      className={`p-1 rounded-md transition-colors ${
-                        darkMode ? "hover:bg-gray-600" : "hover:bg-gray-200"
-                      }`}
-                    >
-                      <span className="text-gray-500">📋</span>
-                    </button>
-                  </div>
-                ))}
-              </div>
+                <span className="mr-1">{showHistory ? "▼" : "▶"}</span>
+                Recently Generated ({history.length})
+              </button>
+
+              {showHistory && (
+                <div className="mt-2 bg-gray-700 rounded-lg p-2">
+                  <ul className="space-y-2">
+                    {history.map((pwd, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-center justify-between p-2 rounded hover:bg-gray-600"
+                      >
+                        <span className="font-mono text-sm truncate max-w-xs">
+                          {pwd}
+                        </span>
+                        <button
+                          onClick={() => usePassword(pwd)}
+                          className="text-xs bg-gray-800 hover:bg-gray-900 px-2 py-1 rounded transition-colors"
+                        >
+                          Use
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           )}
         </div>
 
-        {/* Premium Incentive */}
-        <div
-          className={`mt-6 p-4 rounded-lg flex items-center ${
-            darkMode ? "bg-indigo-900" : "bg-indigo-50"
-          }`}
-        >
-          <span className="text-indigo-500 mr-3 flex-shrink-0">✨</span>
-          <div className="text-sm">
-            <p
-              className={`font-medium ${
-                darkMode ? "text-indigo-300" : "text-indigo-700"
-              }`}
-            >
-              Bookmark this tool for easy access
-            </p>
-            <p
-              className={`${darkMode ? "text-indigo-400" : "text-indigo-600"}`}
-            >
-              We don't store your passwords or track your usage
-            </p>
+        <div className="bg-gray-900 p-4">
+          <div className="text-sm text-gray-400">
+            <h3 className="font-medium mb-2">Password Tips:</h3>
+            <ul className="list-disc space-y-1 pl-5 text-xs">
+              <li>Use at least 12 characters for better security</li>
+              <li>Mix uppercase, lowercase, numbers, and symbols</li>
+              <li>Don't use personal information in your password</li>
+              <li>Use different passwords for different accounts</li>
+            </ul>
           </div>
         </div>
+      </div>
 
-        {/* Footer */}
-        <footer className="mt-8 text-center text-sm text-gray-500">
-          <p>© Nexonware. All rights reserved.</p>
-          <p className="mt-1">We value your security and privacy.</p>
-        </footer>
-      </main>
+      <div className="mt-4 text-center text-xs text-gray-400">
+        <p>
+          Your passwords are generated locally and never stored on any server
+        </p>
+      </div>
     </div>
   );
-}
+};
+
+export default PasswordGenerator;

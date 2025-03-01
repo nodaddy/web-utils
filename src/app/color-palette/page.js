@@ -1,6 +1,9 @@
 // app/json-editor/page.tsx (or /pages/json-editor.tsx in Pages Router)
 import dynamic from "next/dynamic";
 import ColorPaletteSEOContent from "./TextContent";
+import { AppPageContainer } from "../../components/AppPageContainer";
+import { AppSEOTextSection } from "../../components/AppSEOTextSection";
+import { AppContainer } from "../../components/AppContainer";
 // import JsonFormatter from "./JsonFormatter";
 
 //  Dynamically import the client component
@@ -18,9 +21,9 @@ const Colorpalette = dynamic(() => import("./ColorPalette"), {
 
 export const metadata = {
   title:
-    "Free Color Palette Generator | Generate Color Schemes and Harmony Online",
+    "Free Color Palette Generator | Color Schemes and Harmony Online and Export",
   description:
-    "Use our free Color Palette Generator to create beautiful color schemes and harmony. Generate pastel, bright, purple, pink, orange, and other color palettes online. Try now!",
+    "Use our free Color Palette Generator to create beautiful color schemes and harmony. Generate and Export pastel, bright, purple, pink, orange, and other color palettes online. Try now!",
   openGraph: {
     title:
       "Free Color Palette Generator | Generate Color Schemes and download pdf Online",
@@ -52,18 +55,14 @@ export const metadata = {
 
 export default function JsonEditorPage() {
   return (
-    <div className="pt-28 flex justify-between bg-gradient-to-br text-gray-700 from-blue-50 to-indigo-100 overflow:auto">
-      <div className="text-black" style={{ width: "28vw" }}>
+    <AppPageContainer>
+      <AppSEOTextSection>
         <ColorPaletteSEOContent />
-      </div>
+      </AppSEOTextSection>
 
-      <div
-        style={{
-          width: "72vw",
-        }}
-      >
+      <AppContainer>
         <Colorpalette />
-      </div>
-    </div>
+      </AppContainer>
+    </AppPageContainer>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import applicationNamesForGA from "@/Applications";
+import applicationNamesForGA from "../../Applications";
 import { logGAEvent } from "../googleAnalytics/gaEvents";
 
 const { useState } = require("react");

@@ -28,7 +28,14 @@ export const allUtilities = {
       icon: "🎨",
     },
   ],
-  "Developer Tools": [],
+  "Developer Tools": [
+    {
+      id: "url-encode-decode",
+      title: "Encode Decode URL",
+      description: "Encode or Decode Urls",
+      icon: "🎯",
+    },
+  ],
   Productivity: [],
   Lifestyle: [
     {

@@ -1,5 +1,5 @@
 "use client";
-import { allUtilities } from "@/Applications";
+import { allUtilities } from "../Applications";
 // pages/index.js
 import Head from "next/head";
 import Link from "next/link";
@@ -14,6 +14,7 @@ export default function Home() {
 
   // Update displayed utilities when search or filter changes
   useEffect(() => {
+    document.getElementById("util-lib").style.display = "none";
     // Convert all utilities to a flat array for easier filtering
     let utilities = [];
 
@@ -41,10 +42,22 @@ export default function Home() {
     }
 
     setDisplayedUtilities(utilities);
+
+    return () => {
+      document.getElementById("util-lib").style.display = "block";
+    };
   }, [searchTerm, activeCategory]);
 
   return (
     <div className="flex flex-col">
+      <button
+        className="text-black-800 hover:text-blue-800 text-md absolute top-0"
+        onClick={() => {
+          debugSeoGenerator();
+        }}
+      >
+        Debug
+      </button>
       <Head>
         <title>NEXONWARE - Simplifying Your Digital Life</title>
         <meta

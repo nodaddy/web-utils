@@ -1,6 +1,9 @@
 // app/json-editor/page.tsx (or /pages/json-editor.tsx in Pages Router)
 import dynamic from "next/dynamic";
 import SeoContent from "./SeoContent";
+import { AppContainer } from "../../components/AppContainer";
+import { AppSEOTextSection } from "../../components/AppSEOTextSection";
+import { AppPageContainer } from "../../components/AppPageContainer";
 // import JsonFormatter from "./JsonFormatter";
 
 //  Dynamically import the client component
@@ -54,16 +57,14 @@ export const metadata = {
 
 export default function LoremIpsumPage() {
   return (
-    <div className="pt-24 overflow:auto gap-4 text-gray-600 md:pl-16 md:flex-row justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-      <h1 className="text-3xl font-bold text-center mb-4">
-        Case Conversion Online: Instant Conversion Between Case Formats
-      </h1>
-      <div className={`flex flex-col justify-center md:flex-row `}>
-        <div align="left">
-          <App />
-        </div>
+    <AppPageContainer>
+      <AppSEOTextSection>
         <SeoContent />
-      </div>
-    </div>
+      </AppSEOTextSection>
+
+      <AppContainer>
+        <App />
+      </AppContainer>
+    </AppPageContainer>
   );
 }

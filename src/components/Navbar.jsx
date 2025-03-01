@@ -2,9 +2,9 @@
 // components/Navbar.jsx
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useAppContext } from "@/Context/AppContext";
+import { useAppContext } from "../Context/AppContext";
 import { usePathname } from "next/navigation";
-import { logGAEvent } from "@/app/googleAnalytics/gaEvents";
+import { logGAEvent } from "../app/googleAnalytics/gaEvents";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

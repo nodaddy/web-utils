@@ -3,11 +3,11 @@ import React from "react";
 const ColorPaletteSEOContent = () => {
   return (
     <>
-      <h1 align="right" className="text-3xl mb-5 pl-6 pr-2">
+      <h1 className="text-3xl mb-5">
         Color Palette
         <br /> <sup>Your Color Harmony Tool</sup>
       </h1>
-      <div className="mx-auto max-w-4xl px-6 bg-gray-50 text-gray-600 py-8 rounded-r-xl">
+      <div className="mx-auto max-w-4xl text-gray-600 rounded-r-xl">
         <section className="mb-10">
           <h2 className="text-xl font-semibold mb-4">
             Harmony: Transform Your Designs with Perfect Color Combinations

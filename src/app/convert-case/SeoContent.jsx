@@ -1,7 +1,12 @@
 const SeoContent = () => {
   return (
-    <div className="max-w-2xl mx-auto p-6 space-y-6">
-      <p className="text-lg text-gray-700">
+    <div className="max-w-2xl mx-auto space-y-6">
+      <h1 className="text-2xl font-bold">
+        {" "}
+        Case Conversion Online: Instant Conversion Between Case Formats
+      </h1>
+
+      <p className="text-md text-gray-700">
         Welcome to our free case conversion online tool, designed to help you
         quickly change case online for any text. Whether you need a lowercase
         converter for formal documents, or a capital letters converter for

@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { ChromePicker } from "react-color";
 import { saveAs } from "file-saver";
 import { jsPDF } from "jspdf";
-import { useAppContext } from "@/Context/AppContext";
+import { useAppContext } from "../../Context/AppContext";
 import { logGAEvent } from "../googleAnalytics/gaEvents";
-import applicationNamesForGA from "@/Applications";
+import applicationNamesForGA from "../../Applications";
 
 export default function Colorpalette() {
   const [currentColor, setCurrentColor] = useState("#B2FFFF");
@@ -351,12 +351,8 @@ export default function Colorpalette() {
   };
 
   return (
-    <div
-      style={{
-        widht: "auto",
-      }}
-    >
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div className="w-full">
+      <main className="w-full mx-auto sm:px-6 lg:px-8 relative">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="md:flex">
             {/* Left Panel - Color Picker */}
@@ -402,22 +398,6 @@ export default function Colorpalette() {
                     </button>
                   </div>
                 )}
-              </div>
-              <div>
-                <h2 className="text-lg font-medium text-gray-900 mb-4">
-                  {colorHistory?.length ? "Pick History" : ""}
-                </h2>
-                <div className="grid grid-cols-5 gap-2">
-                  {colorHistory.map((color, index) => (
-                    <div
-                      key={`history-${index}`}
-                      className="w-full aspect-square rounded-md cursor-pointer hover:scale-105 transition-transform shadow-sm"
-                      style={{ backgroundColor: color }}
-                      onClick={() => setCurrentColor(color)}
-                      title={color}
-                    ></div>
-                  ))}
-                </div>
               </div>
             </div>
 

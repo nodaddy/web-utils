@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { logGAEvent } from "../googleAnalytics/gaEvents";
-import applicationNamesForGA from "@/Applications";
+import applicationNamesForGA from "../../Applications";
 
 const FontAndSizeControls = () => {
   const [selectedFont, setSelectedFont] = useState("font-serif");

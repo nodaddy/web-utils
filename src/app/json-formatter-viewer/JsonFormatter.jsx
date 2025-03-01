@@ -7,9 +7,9 @@ import React, {
   useMemo,
 } from "react";
 import "jsoneditor/dist/jsoneditor.min.css";
-import { useAppContext } from "@/Context/AppContext";
+import { useAppContext } from "../../Context/AppContext";
 import { logGAEvent } from "../googleAnalytics/gaEvents";
-import applicationNamesForGA from "@/Applications";
+import applicationNamesForGA from "../../Applications";
 
 const JsonFormatter = () => {
   const sourceContainerRef = useRef(null);
