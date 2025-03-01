@@ -9,6 +9,7 @@ const applicationNamesForGA = {
   jsonYamlConverter: "json-yaml-converter",
   xmlJSONConverter: "xml-json-converter",
   jsonCsvConverter: "json-csv-converter",
+  markdownEditor: "markdown-editor",
 };
 
 export const allUtilities = {
@@ -57,6 +58,12 @@ export const allUtilities = {
       title: "Encode Decode URL",
       description: "Encode or Decode Urls",
       icon: "🎯",
+    },
+    {
+      id: "markdown-editor",
+      title: "Markdown Editor",
+      description: "Write and preview markdown",
+      icon: "📝",
     },
   ],
   Productivity: [],

@@ -11,7 +11,34 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: 'none',
+            code: {
+              color: '#24292e',
+              backgroundColor: '#f6f8fa',
+              padding: '0.2em 0.4em',
+              borderRadius: '3px',
+              fontWeight: '400',
+            },
+            'code::before': {
+              content: '""',
+            },
+            'code::after': {
+              content: '""',
+            },
+            pre: {
+              backgroundColor: '#f6f8fa',
+              borderRadius: '6px',
+              padding: '16px',
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 };
