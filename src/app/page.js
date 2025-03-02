@@ -72,7 +72,7 @@ export default function Home() {
           <nav className="flex justify-between items-center">
             <Link href="/" className="group relative flex items-center">
               <span className="text-white font-bold text-2xl tracking-tighter">
-                <span className="text-cyan-400">NEX</span>ONWARE
+                <span className="text-cyan-400">NEXON</span>WARE
               </span>
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-400 transition-all group-hover:w-full duration-300"></span>
             </Link>

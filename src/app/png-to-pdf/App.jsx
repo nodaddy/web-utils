@@ -243,7 +243,7 @@ export default function Home() {
             <span className="bg-purple-600 text-white p-2 rounded-lg mr-3">
               📄
             </span>
-            JPG to PDF Converter
+            PNG to PDF Converter
           </h1>
 
           <div className="space-y-5">
