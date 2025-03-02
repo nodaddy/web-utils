@@ -253,6 +253,9 @@ function ApplicationListingForm() {
             Copy to Clipboard
           </button>
         </form>
+        prompt: give next.js component for a word to pdf converter, use tailwind
+        only and use html emojis if icons needed, make it look premium and keep
+        it lightweight
       </div>
     </div>
   );

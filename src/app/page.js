@@ -389,7 +389,7 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-10">
             <div>
               <div className="text-white font-bold text-2xl tracking-tighter mb-6">
-                <span className="text-cyan-400">NEX</span>ONWARE
+                <span className="text-cyan-400">NEXON</span>WARE
               </div>
               <p className="text-gray-400 mb-6">
                 Premium digital utilities crafted to transform your online
