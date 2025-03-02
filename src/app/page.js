@@ -142,7 +142,7 @@ export default function Home() {
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <span className="inline-block px-3 py-1 bg-gray-800 text-cyan-400 text-xs uppercase tracking-wider rounded-full mb-6">
-              Next Generation Web Utilities
+              Digital Utilities
             </span>
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight">
@@ -268,7 +268,10 @@ export default function Home() {
                     target="_blank"
                     className="group"
                   >
-                    <div className="relative overflow-hidden bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 h-full p-6">
+                    <div
+                      align="center"
+                      className="relative overflow-hidden bg-white rounded-[20px] border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 p-4"
+                    >
                       {/* Utility icon */}
                       <div className="mb-4 text-2xl bg-gray-50 p-4 rounded-full inline-flex items-center justify-center w-16 h-16 group-hover:scale-110 transition-transform duration-300 text-cyan-600 group-hover:text-cyan-500 group-hover:bg-cyan-50">
                         {util.icon}
@@ -276,29 +279,12 @@ export default function Home() {
 
                       {/* Utility title and description */}
                       <div>
-                        <h3 className="text-gray-900 font-semibold text-lg mb-2 group-hover:text-cyan-600 transition-colors">
+                        <h3 className="text-gray-900 font-semibold text-lg group-hover:text-cyan-600 transition-colors">
                           {util.title}
                         </h3>
                         <p className="text-sm text-gray-600 mb-4">
                           {util.description}
                         </p>
-                        <div className="flex items-center text-cyan-600 text-sm font-medium">
-                          <span>Open Utility</span>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M9 5l7 7-7 7"
-                            />
-                          </svg>
-                        </div>
                       </div>
 
                       {/* Corner accent */}

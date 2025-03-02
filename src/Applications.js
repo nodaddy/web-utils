@@ -14,8 +14,9 @@ const applicationNamesForGA = {
 };
 
 export const allUtilities = {
-  "File Conversion": [],
-  "Data Tools": [
+  "File Converter": [],
+  "File Compressor": [],
+  "Data Formatter": [
     {
       id: "sample-data-generator",
       title: "Sample Data Generator",
@@ -58,8 +59,18 @@ export const allUtilities = {
       description: "XML - JSON ",
       icon: "🤖",
     },
-  ],
-  "Developer Tools": [
+    {
+      id: "convert-case",
+      title: "Case converter",
+      description: "Instanly Convert Text Case",
+      icon: "🔡",
+    },
+    {
+      id: "base64-encode-decode",
+      title: "Base64 Encode Decode",
+      description: "Encode and decode base64 strings",
+      icon: "🤖",
+    },
     {
       id: "url-encode-decode",
       title: "Encode Decode URL",
@@ -76,20 +87,7 @@ export const allUtilities = {
       icon: "🔒",
     },
   ],
-  "Text Tools": [
-    {
-      id: "convert-case",
-      title: "Case converter",
-      description: "Instanly Convert Text Case",
-      icon: "🔡",
-    },
-    {
-      id: "base64-encode-decode",
-      title: "Base64 Encode Decode",
-      description: "Encode and decode base64 strings",
-      icon: "🤖",
-    },
-  ],
+  "Text Tools": [],
   Miscellaneous: [
     {
       id: "meta-tags",
