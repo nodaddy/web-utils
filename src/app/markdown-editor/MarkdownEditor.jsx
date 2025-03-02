@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useAppContext } from "@/Context/AppContext";
+import { useAppContext } from "../../Context/AppContext";
 import { jsPDF } from "jspdf";
-import { logGAEvent } from "@/app/googleAnalytics/gaEvents";
+import { logGAEvent } from "../../app/googleAnalytics/gaEvents";
 import MarkdownToolbar from "./MarkdownToolbar";
 import MarkdownPreview from "./MarkdownPreview";
 
@@ -54,28 +54,28 @@ export default function MarkdownEditor() {
   // Set the tool name in the app context
   useEffect(() => {
     setTool("Markdown Editor");
-    
+
     // Try to load saved markdown from localStorage
     const savedMarkdown = localStorage.getItem("nexonware-markdown");
     if (savedMarkdown) {
       setMarkdown(savedMarkdown);
     }
-    
+
     // Log page view
     logGAEvent("view_markdown_editor");
-    
+
     return () => {
       // Save markdown to localStorage when component unmounts
       localStorage.setItem("nexonware-markdown", markdown);
     };
   }, [setTool]);
-  
+
   // Save markdown to localStorage when it changes
   useEffect(() => {
     const saveTimeout = setTimeout(() => {
       localStorage.setItem("nexonware-markdown", markdown);
     }, 1000);
-    
+
     return () => clearTimeout(saveTimeout);
   }, [markdown]);
 
@@ -88,14 +88,19 @@ export default function MarkdownEditor() {
   const insertTextAtCursor = (textBefore, textAfter = "") => {
     const editor = editorRef.current;
     if (!editor) return;
-    
+
     const start = editor.selectionStart;
     const end = editor.selectionEnd;
     const selectedText = markdown.substring(start, end);
-    const newText = markdown.substring(0, start) + textBefore + selectedText + textAfter + markdown.substring(end);
-    
+    const newText =
+      markdown.substring(0, start) +
+      textBefore +
+      selectedText +
+      textAfter +
+      markdown.substring(end);
+
     setMarkdown(newText);
-    
+
     // Set cursor position after the operation
     setTimeout(() => {
       editor.focus();
@@ -110,8 +115,9 @@ export default function MarkdownEditor() {
   const exportAsHTML = () => {
     // Create a blob with the HTML content
     const htmlContent = document.querySelector(".markdown-preview").innerHTML;
-    const blob = new Blob([
-      `<!DOCTYPE html>
+    const blob = new Blob(
+      [
+        `<!DOCTYPE html>
       <html>
       <head>
         <meta charset="utf-8">
@@ -132,9 +138,11 @@ export default function MarkdownEditor() {
           Created with <a href="https://nexonware.com/markdown-editor">Nexonware Markdown Editor</a>
         </footer>
       </body>
-      </html>`
-    ], { type: "text/html" });
-    
+      </html>`,
+      ],
+      { type: "text/html" }
+    );
+
     // Create download link
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -144,7 +152,7 @@ export default function MarkdownEditor() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    
+
     logGAEvent("export_markdown_html");
   };
 
@@ -152,25 +160,25 @@ export default function MarkdownEditor() {
   const exportAsPDF = () => {
     const doc = new jsPDF();
     const previewElement = document.querySelector(".markdown-preview");
-    
+
     // Set PDF properties
     doc.setProperties({
       title: "Markdown Export",
       subject: "Exported from Nexonware Markdown Editor",
       creator: "Nexonware",
     });
-    
+
     // Add content to PDF
     doc.html(previewElement, {
-      callback: function(pdf) {
+      callback: function (pdf) {
         pdf.save("markdown-export.pdf");
       },
       x: 15,
       y: 15,
       width: 170,
-      windowWidth: 650
+      windowWidth: 650,
     });
-    
+
     logGAEvent("export_markdown_pdf");
   };
 
@@ -185,13 +193,17 @@ export default function MarkdownEditor() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    
+
     logGAEvent("export_markdown_md");
   };
 
   // Clear editor content
   const clearEditor = () => {
-    if (confirm("Are you sure you want to clear the editor? This action cannot be undone.")) {
+    if (
+      confirm(
+        "Are you sure you want to clear the editor? This action cannot be undone."
+      )
+    ) {
       setMarkdown("");
       logGAEvent("clear_markdown_editor");
     }
@@ -210,9 +222,13 @@ export default function MarkdownEditor() {
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-lg overflow-hidden ${isFullscreen ? 'fixed inset-0 z-50' : ''}`}>
+    <div
+      className={`bg-white rounded-lg shadow-lg overflow-hidden ${
+        isFullscreen ? "fixed inset-0 z-50" : ""
+      }`}
+    >
       {/* Toolbar */}
-      <MarkdownToolbar 
+      <MarkdownToolbar
         viewMode={viewMode}
         setViewMode={setViewMode}
         theme={theme}
@@ -227,12 +243,20 @@ export default function MarkdownEditor() {
         toggleFullscreen={toggleFullscreen}
         isFullscreen={isFullscreen}
       />
-      
+
       {/* Editor and Preview */}
-      <div className={`flex ${viewMode === 'split' ? 'flex-col md:flex-row' : 'flex-col'}`}>
+      <div
+        className={`flex ${
+          viewMode === "split" ? "flex-col md:flex-row" : "flex-col"
+        }`}
+      >
         {/* Editor */}
-        {(viewMode === 'editor' || viewMode === 'split') && (
-          <div className={`${viewMode === 'split' ? 'md:w-1/2' : 'w-full'} border-r border-gray-200`}>
+        {(viewMode === "editor" || viewMode === "split") && (
+          <div
+            className={`${
+              viewMode === "split" ? "md:w-1/2" : "w-full"
+            } border-r border-gray-200`}
+          >
             <div className="p-2 bg-gray-100 border-b border-gray-200">
               <h3 className="text-sm font-medium text-gray-700">Editor</h3>
             </div>
@@ -240,32 +264,38 @@ export default function MarkdownEditor() {
               ref={editorRef}
               value={markdown}
               onChange={handleEditorChange}
-              className={`w-full p-4 font-mono ${fontSizeClasses[fontSize]} focus:outline-none ${
-                theme === 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-800'
+              className={`w-full p-4 font-mono ${
+                fontSizeClasses[fontSize]
+              } focus:outline-none ${
+                theme === "dark"
+                  ? "bg-gray-900 text-gray-100"
+                  : "bg-white text-gray-800"
               }`}
-              style={{ 
-                minHeight: '500px',
-                height: isFullscreen ? 'calc(100vh - 120px)' : '500px',
-                resize: 'vertical'
+              style={{
+                minHeight: "500px",
+                height: isFullscreen ? "calc(100vh - 120px)" : "500px",
+                resize: "vertical",
               }}
               spellCheck="false"
             ></textarea>
           </div>
         )}
-        
+
         {/* Preview */}
-        {(viewMode === 'preview' || viewMode === 'split') && (
-          <div className={`${viewMode === 'split' ? 'md:w-1/2' : 'w-full'}`}>
+        {(viewMode === "preview" || viewMode === "split") && (
+          <div className={`${viewMode === "split" ? "md:w-1/2" : "w-full"}`}>
             <div className="p-2 bg-gray-100 border-b border-gray-200">
               <h3 className="text-sm font-medium text-gray-700">Preview</h3>
             </div>
-            <div 
+            <div
               className={`p-4 overflow-auto ${fontSizeClasses[fontSize]} ${
-                theme === 'dark' ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-800'
+                theme === "dark"
+                  ? "bg-gray-800 text-gray-100"
+                  : "bg-white text-gray-800"
               }`}
-              style={{ 
-                minHeight: '500px',
-                height: isFullscreen ? 'calc(100vh - 120px)' : '500px'
+              style={{
+                minHeight: "500px",
+                height: isFullscreen ? "calc(100vh - 120px)" : "500px",
               }}
             >
               <MarkdownPreview markdown={markdown} />
@@ -273,7 +303,7 @@ export default function MarkdownEditor() {
           </div>
         )}
       </div>
-      
+
       {/* Character count */}
       <div className="p-2 bg-gray-100 border-t border-gray-200 text-xs text-gray-500 flex justify-between">
         <span>{markdown.length} characters</span>
@@ -282,4 +312,4 @@ export default function MarkdownEditor() {
       </div>
     </div>
   );
-} 
+}
