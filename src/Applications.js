@@ -13,6 +13,9 @@ const applicationNamesForGA = {
   metaTagsGenerator: "meta-tags-generator",
   pdfToJpg: "pdf-to-jpg",
   pdfToImageConvert: "pdf-to-image",
+  imageToPdf: "image-to-pdf",
+  jpgToPdf: "jpg-to-pdf",
+  pngToPdf: "png-to-pdf",
 };
 
 export const allUtilities = {
@@ -24,10 +27,28 @@ export const allUtilities = {
       icon: "🌟",
     },
     {
+      id: "png-to-pdf",
+      title: "PNG to PDF",
+      description: "Convert PNG file to PDF file",
+      icon: "🌟",
+    },
+    {
       id: "pdf-to-image",
       title: "PDF to Image ",
       description: "Convert PDF to Images",
       icon: "💡",
+    },
+    {
+      id: "image-to-pdf",
+      title: "Image to PDF",
+      description: "Convert Images to PDF",
+      icon: "🚀",
+    },
+    {
+      id: "jpg-to-pdf",
+      title: "JPG to PDF ",
+      description: "Convert JPG to PDF",
+      icon: "⚡",
     },
   ],
   "File Compressor": [],

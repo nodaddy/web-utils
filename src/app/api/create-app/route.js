@@ -193,7 +193,7 @@ async function generateSEOContent(pk, sk, appRoute) {
     
     The content should:
     1. Be approximately 250-300 words
-    2. Must Include all the primary and secondary keywords through out
+    2. Must Include all the primary and secondary keywords through out the content repeat the keywords at least 3 times
     3. Incorporate the keywords naturally
     4. Be informative and valuable to users
     5. should have Faqs section
@@ -202,20 +202,17 @@ async function generateSEOContent(pk, sk, appRoute) {
     Keep SEO in mind while generating the content, best seo
 
     
-    Return the content as a simple HTML string with only h1, h2, p, and strong tags for example
+    Return the content as a simple HTML string with only h1, h2, p, and strong tags and no margin-y to the outermost element for example
     <div className="max-w-2xl mx-auto space-y-6">
-      <h1 className="text-2xl font-bold"></h1>
+      <h1 className="text-2xl mb-2 font-bold"></h1>
 
-      <p className="text-md text-gray-700"></p>
+      <p className="text-md mb-2 text-gray-700"></p>
 
-      <h2 className="text-2xl font-semibold"></h2>
-      <ul className="list-disc pl-6 text-gray-700"></ul>
+      <h2 className="text-2xl mb-2 font-semibold"></h2>
+      <ul className="list-disc mb-2 pl-6 text-gray-700"></ul>
 
-      <h2 className="text-2xl font-semibold"></h2>
-      <ol className="list-decimal pl-6 text-gray-700"></ol>
-
-      <h2 className="text-2xl font-semibold">Frequently Asked Questions</h2>
-      <div className="space-y-4">
+      <h2 className="text-2xl font-semibold mb-2">Frequently Asked Questions</h2>
+      <div className="space-y-4 mb-2">
         <details className="border border-gray-300 p-4 rounded-lg">
           <summary className="font-medium cursor-pointer"></summary>
           <p className="text-gray-700 mt-2"></p>
