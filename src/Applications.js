@@ -10,6 +10,7 @@ const applicationNamesForGA = {
   xmlJSONConverter: "xml-json-converter",
   jsonCsvConverter: "json-csv-converter",
   sampleDataGenerator: "sample-data-generator",
+  metaTagsGenerator: "meta-tags-generator",
 };
 
 export const allUtilities = {
@@ -87,6 +88,14 @@ export const allUtilities = {
       title: "Base64 Encode Decode",
       description: "Encode and decode base64 strings",
       icon: "🤖",
+    },
+  ],
+  Miscellaneous: [
+    {
+      id: "meta-tags",
+      title: "Meta Tags",
+      description: "Boost SEO with Meta Tags",
+      icon: "💻",
     },
   ],
 };
