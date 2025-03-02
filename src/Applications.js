@@ -1,6 +1,3 @@
-import Base64EncoderDecoder from "./app/base64-encode-decode/App";
-import URLEncoderDecoder from "./app/url-encode-decode/App";
-
 const applicationNamesForGA = {
   jsonFormatterViewer: "json-formatter",
   textGenerator: "text-generator",
@@ -9,6 +6,9 @@ const applicationNamesForGA = {
   convertCase: "convert-case",
   URLEncoderDecoder: "url-encode-decode",
   Base64EncoderDecoder: "base64-encode-decode",
+  jsonYamlConverter: "json-yaml-converter",
+  xmlJSONConverter: "xml-json-converter",
+  jsonCsvConverter: "json-csv-converter",
 };
 
 export const allUtilities = {
@@ -21,7 +21,7 @@ export const allUtilities = {
       icon: "Aa",
     },
     {
-      id: "json-formatter",
+      id: "json-formatter-viewer",
       title: "JSON Formatter",
       description: "Format and validate JSON data",
       icon: "📜",
@@ -31,6 +31,24 @@ export const allUtilities = {
       title: "Color palette",
       description: "Create color schemes",
       icon: "🎨",
+    },
+    {
+      id: "json-yaml-converter",
+      title: "Json Yaml Converter",
+      description: "JSON - YAML ",
+      icon: "🔥",
+    },
+    {
+      id: "json-csv-converter",
+      title: "JSON CSV Converter",
+      description: "JSON - CSV",
+      icon: "⚡",
+    },
+    {
+      id: "xml-json-converter",
+      title: "XML JSON Converter",
+      description: "JSON - YAML ",
+      icon: "🤖",
     },
   ],
   "Developer Tools": [

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useAppContext } from "../../Context/AppContext";
 
 const PasswordGenerator = () => {
   const [password, setPassword] = useState("");
@@ -16,8 +17,11 @@ const PasswordGenerator = () => {
   const [history, setHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
 
+  const { setTool } = useAppContext();
+
   // Generate password on initial load and when settings change
   useEffect(() => {
+    setTool("Password Generator");
     generatePassword();
   }, []);
 
@@ -197,7 +201,7 @@ const PasswordGenerator = () => {
               <div className="flex space-x-2">
                 <button
                   onClick={copyToClipboard}
-                  className="text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 p-2 rounded transition-colors"
+                  className="text-gray-300 hover:text-white  p-2 rounded transition-colors text-xs"
                   aria-label="Copy to clipboard"
                   title="Copy to clipboard"
                 >
@@ -205,26 +209,15 @@ const PasswordGenerator = () => {
                     <span
                       role="img"
                       aria-label="copied"
-                      className="text-green-400"
+                      className="text-green-400 "
                     >
                       ✅
                     </span>
                   ) : (
                     <span role="img" aria-label="copy">
-                      📋
+                      Copy
                     </span>
                   )}
-                </button>
-                <button
-                  onClick={generatePassword}
-                  disabled={isGenerating}
-                  className="text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 p-2 rounded transition-colors"
-                  aria-label="Generate new password"
-                  title="Generate new password"
-                >
-                  <span role="img" aria-label="refresh">
-                    🔄
-                  </span>
                 </button>
               </div>
             </div>
