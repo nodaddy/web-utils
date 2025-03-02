@@ -9,11 +9,18 @@ const applicationNamesForGA = {
   jsonYamlConverter: "json-yaml-converter",
   xmlJSONConverter: "xml-json-converter",
   jsonCsvConverter: "json-csv-converter",
+  sampleDataGenerator: "sample-data-generator",
 };
 
 export const allUtilities = {
   "File Conversion": [],
   "Data Tools": [
+    {
+      id: "sample-data-generator",
+      title: "Sample Data Generator",
+      description: "Sample/Mock data",
+      icon: "📱",
+    },
     {
       id: "lorem-ipsum",
       title: "Lorem Ipsum",
@@ -34,7 +41,7 @@ export const allUtilities = {
     },
     {
       id: "json-yaml-converter",
-      title: "Json Yaml Converter",
+      title: "JSON YAML Converter",
       description: "JSON - YAML ",
       icon: "🔥",
     },
@@ -47,7 +54,7 @@ export const allUtilities = {
     {
       id: "xml-json-converter",
       title: "XML JSON Converter",
-      description: "JSON - YAML ",
+      description: "XML - JSON ",
       icon: "🤖",
     },
   ],

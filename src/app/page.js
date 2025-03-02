@@ -50,14 +50,6 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
-      <button
-        className="text-black-800 hover:text-blue-800 text-md absolute top-0"
-        onClick={() => {
-          debugSeoGenerator();
-        }}
-      >
-        Debug
-      </button>
       <Head>
         <title>NEXONWARE - Simplifying Your Digital Life</title>
         <meta
