@@ -193,7 +193,7 @@ async function generateSEOContent(pk, sk, appRoute) {
     
     The content should:
     1. Be approximately 250-300 words
-    2. Include one H1 heading and 2-3 H2 subheadings
+    2. Must Include all the primary and secondary keywords through out
     3. Incorporate the keywords naturally
     4. Be informative and valuable to users
     5. should have Faqs section

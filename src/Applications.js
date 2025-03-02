@@ -11,10 +11,25 @@ const applicationNamesForGA = {
   jsonCsvConverter: "json-csv-converter",
   sampleDataGenerator: "sample-data-generator",
   metaTagsGenerator: "meta-tags-generator",
+  pdfToJpg: "pdf-to-jpg",
+  pdfToImageConvert: "pdf-to-image",
 };
 
 export const allUtilities = {
-  "File Converter": [],
+  "File Converter": [
+    {
+      id: "pdf-to-jpg",
+      title: "PDF to JPG",
+      description: "Convert PDF File to JPG File",
+      icon: "🌟",
+    },
+    {
+      id: "pdf-to-image",
+      title: "PDF to Image ",
+      description: "Convert PDF to Images",
+      icon: "💡",
+    },
+  ],
   "File Compressor": [],
   "Data Formatter": [
     {
