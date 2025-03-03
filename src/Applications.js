@@ -27,7 +27,7 @@ export const allUtilities = {
       id: "ppt-to-pdf",
       title: "PPT to PDF",
       description: "Convert PPT to PDF",
-      icon: "",
+      icon: "💡",
     },
     {
       id: "pdf-to-jpg",
