@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { logGAEvent } from "../googleAnalytics/gaEvents";
+import applicationNamesForGA from "../../Applications";
 
 export default function PptToPdfConverter() {
   const [file, setFile] = useState(null);
@@ -256,7 +258,7 @@ export default function PptToPdfConverter() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-slate-100 p-6 flex flex-col items-center justify-center">
+    <div className="  flex flex-col items-center justify-center">
       <div className="w-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="px-8 py-6 bg-purple-600 text-white">
           <h1 className="text-2xl font-bold flex items-center">
@@ -360,7 +362,10 @@ export default function PptToPdfConverter() {
 
           {/* Action Button */}
           <button
-            onClick={handleConversion}
+            onClick={() => {
+              logGAEvent(applicationNamesForGA.pptToPdf + "_click_convert");
+              handleConversion();
+            }}
             disabled={!file || isConverting}
             className={`mt-6 w-full py-3 rounded-lg font-medium flex items-center justify-center ${
               !file || isConverting
@@ -408,35 +413,6 @@ export default function PptToPdfConverter() {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="mt-6 max-w-2xl">
-        <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
-          <h3 className="text-sm font-bold text-amber-800 flex items-center">
-            <span className="mr-2">⚠️</span> Browser Limitations
-          </h3>
-          <p className="text-xs text-amber-700 mt-1">
-            Due to browser limitations, this tool can only create placeholder
-            slides for PowerPoint files. For a complete conversion with all
-            formatting and graphics, we recommend:
-          </p>
-          <ul className="text-xs text-amber-700 mt-1 ml-5 list-disc">
-            <li>Using PowerPoint's built-in "Save as PDF" feature</li>
-            <li>
-              Using Google Slides to import your presentation and export as PDF
-            </li>
-            <li>
-              Using a dedicated PowerPoint to PDF converter software or online
-              service
-            </li>
-          </ul>
-        </div>
-
-        <p className="text-sm text-slate-500 text-center mt-4">
-          This converter demonstrates the concept of browser-based conversion.
-          When you click "Convert to PDF", a print dialog will open where you
-          can save as PDF.
-        </p>
       </div>
     </div>
   );
