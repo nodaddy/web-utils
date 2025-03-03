@@ -17,6 +17,7 @@ const applicationNamesForGA = {
   jpgToPdf: "jpg-to-pdf",
   pngToPdf: "png-to-pdf",
   wordToPdf: "word-to-pdf",
+  excelToPdf: "excel-to-pdf",
 };
 
 export const allUtilities = {
@@ -26,6 +27,12 @@ export const allUtilities = {
       title: "PDF to JPG",
       description: "Convert PDF File to JPG File",
       icon: "🌟",
+    },
+    {
+      id: "excel-to-pdf",
+      title: "EXCEL to PDF",
+      description: "Convert EXCEL file to PDF file",
+      icon: "🤖",
     },
     {
       id: "png-to-pdf",
