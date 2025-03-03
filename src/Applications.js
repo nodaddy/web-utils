@@ -18,10 +18,17 @@ const applicationNamesForGA = {
   pngToPdf: "png-to-pdf",
   wordToPdf: "word-to-pdf",
   excelToPdf: "excel-to-pdf",
+  pptToPdf: "ppt-to-pdf",
 };
 
 export const allUtilities = {
   "File Converter": [
+    {
+      id: "ppt-to-pdf",
+      title: "PPT to PDF",
+      description: "Convert PPT to PDF",
+      icon: "",
+    },
     {
       id: "pdf-to-jpg",
       title: "PDF to JPG",

@@ -53,9 +53,9 @@ export default function SeoDebugForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white p-6 mt-16">
-      <div className="bg-gray-900 p-8 rounded-2xl shadow-2xl w-full max-w-lg border border-gray-700">
-        <h2 className="text-3xl font-bold text-center text-purple-500 mb-6">
+    <div className="min-h-screen flex justify-around bg-black text-white p-6 mt-16">
+      <div className=" p-8 rounded-2xl shadow-2xl w-full max-w-lg">
+        <h2 align="left" className="text-3xl font-bold  text-purple-500 mb-6">
           Create App Route
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -101,17 +101,17 @@ export default function SeoDebugForm() {
             />
           </div>
 
-          <div>
+          <div align="right">
             <label className="block text-sm text-gray-400 mb-1">
-              App Description
+              {/* App Des X */}
             </label>
-            <textarea
+            {/* <textarea
               name="appDescription"
               value={formData.appDescription}
               onChange={handleChange}
               rows="4"
               className="w-full p-3 bg-gray-800 rounded-lg border border-gray-700 focus:ring-2 focus:ring-purple-500 outline-none"
-            ></textarea>
+            ></textarea> */}
           </div>
 
           <button
@@ -119,7 +119,7 @@ export default function SeoDebugForm() {
             disabled={loading}
             className="w-full bg-purple-600 hover:bg-purple-500 text-white py-3 rounded-lg text-lg font-semibold transition"
           >
-            {loading ? "Processing..." : "Submit Request"}
+            {loading ? "Processing..." : "Create App"}
           </button>
 
           {error && <p className="text-red-500 text-center mt-3">{error}</p>}
@@ -171,8 +171,8 @@ function ApplicationListingForm() {
   const emojis = ["🚀", "💡", "🔥", "🎨", "⚡", "📱", "🌟", "💻", "🎯", "🤖"];
 
   return (
-    <div className="flex justify-around text-white p-6">
-      <div className="bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md border border-gray-700">
+    <div className="flex justify-around text-white ">
+      <div className=" p-8 rounded-2xl w-full">
         <h2 className="text-2xl font-bold text-center text-green-400 mb-6">
           Application Listing Form
         </h2>
@@ -244,7 +244,7 @@ function ApplicationListingForm() {
               )}
             </div>
           </div>
-
+          <br />
           <button
             type="button"
             onClick={handleCopy}
@@ -253,9 +253,6 @@ function ApplicationListingForm() {
             Copy to Clipboard
           </button>
         </form>
-        prompt: give next.js component for a word to pdf converter, use tailwind
-        only and use html emojis if icons needed, make it look premium and keep
-        it lightweight
       </div>
     </div>
   );
