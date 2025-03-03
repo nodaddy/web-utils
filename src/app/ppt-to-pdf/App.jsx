@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { logGAEvent } from "../googleAnalytics/gaEvents";
 import applicationNamesForGA from "../../Applications";
+import { useAppContext } from "../../Context/AppContext";
 
 export default function PptToPdfConverter() {
   const [file, setFile] = useState(null);
@@ -14,6 +15,12 @@ export default function PptToPdfConverter() {
   const [slideImages, setSlideImages] = useState([]);
   const [slideCount, setSlideCount] = useState(0);
   const dropAreaRef = useRef(null);
+
+  const { setTool } = useAppContext();
+
+  useEffect(() => {
+    setTool("PPT to PDF Converter");
+  }, []);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files ? e.target.files[0] : null;
