@@ -73,11 +73,9 @@ export default function Colorpalette() {
 
   // Load predefined palette when tab changes
   useEffect(() => {
-    if (activePaletteTab !== "custom") {
-      setPalette(
-        predefinedPalettes[activePaletteTab] || predefinedPalettes.default
-      );
-    }
+    setPalette(
+      predefinedPalettes[activePaletteTab] || predefinedPalettes.default
+    );
   }, [activePaletteTab]);
 
   useEffect(() => {
