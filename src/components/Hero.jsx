@@ -26,9 +26,9 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8"
           >
-            Enterprise-grade tools and solutions to help your business grow,
-            scale, and succeed in the digital age at a fraction of the cost of
-            traditional software.
+            Enterprise solutions to help organizations grow, scale, and succeed
+            in the digital age at a fraction of the cost of traditional
+            software.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -36,16 +36,16 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Link href="auth/register" className="btn-primary">
+            {/* <Link href="auth/register" className="btn-primary">
               Get Started
-            </Link>
-            <Link href="/solutions" className="btn-outline">
+            </Link> */}
+            {/* <Link href="/solutions" className="btn-outline">
               Explore Solutions
-            </Link>
+            </Link> */}
           </motion.div>
 
           {/* Stats */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
@@ -71,7 +71,7 @@ export default function Hero() {
               </h3>
               <p className="text-gray-600 dark:text-gray-400">Support</p>
             </div>
-          </motion.div>
+          </motion.div> */}
         </div>
       </div>
 

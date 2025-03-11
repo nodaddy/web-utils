@@ -46,18 +46,7 @@ export default function Navbar() {
             >
               Products
             </Link>
-            <Link
-              href="/solutions"
-              className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
-            >
-              Solutions
-            </Link>
-            <Link
-              href="/pricing"
-              className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
-            >
-              Pricing
-            </Link>
+
             <Link
               href="/about"
               className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
@@ -153,20 +142,7 @@ export default function Navbar() {
             >
               Products
             </Link>
-            <Link
-              href="/solutions"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Solutions
-            </Link>
-            <Link
-              href="/pricing"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Pricing
-            </Link>
+
             <Link
               href="/about"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"

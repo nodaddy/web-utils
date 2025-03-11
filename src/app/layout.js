@@ -61,7 +61,7 @@ export default function RootLayout({ children }) {
           <Navbar />
 
           {children}
-          <UtilityLibrary />
+          {/* <UtilityLibrary /> */}
         </AppProvider>
       </body>
     </html>

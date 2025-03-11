@@ -115,7 +115,7 @@ export default function Comp() {
       ) : (
         <div>
           <Hero />
-          <Feature />
+          {/* <Feature /> */}
           <CTA />
         </div>
       )}
