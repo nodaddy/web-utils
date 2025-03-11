@@ -90,10 +90,9 @@ export default function Navbar() {
 
           {/* Mobile menu button */}
           <div className="flex items-center space-x-2 md:hidden">
-            {/* <ThemeToggle /> */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none"
+              className=" rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none"
             >
               {isMobileMenuOpen ? (
                 <svg

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <div className="relative min-h-screen flex items-center">
+    <div className="relative h-[70vh] pt-[8vh] md:min-h-screen md:pt-[0px] flex items-center">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-950 dark:to-secondary-950" />
 
@@ -78,8 +78,8 @@ export default function Hero() {
       {/* Decorative elements */}
       <div className="absolute inset-0 z-0 opacity-30 dark:opacity-20">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
-        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-secondary-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
-        <div className="absolute bottom-1/4 left-1/2 w-64 h-64 bg-primary-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
+        <div className="absolute top-1/3 right-3/4 w-64 h-64 bg-secondary-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+        <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-primary-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
       </div>
     </div>
   );
