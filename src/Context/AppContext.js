@@ -1,7 +1,9 @@
 "use client";
 
+import { auth } from "@/lib/firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 // context/AppContext.js
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 // Create Context
 const AppContext = createContext(null);
@@ -12,10 +14,31 @@ export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [theme, setTheme] = useState("light");
   const [tool, setTool] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const logout = () => {
+    signOut(auth);
+  };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <AppContext.Provider
-      value={{ user, setUser, theme, setTheme, tool, setTool }}
+      value={{
+        user,
+        setUser,
+        theme,
+        setTheme,
+        tool,
+        setTool,
+        isAuthenticated,
+        logout,
+      }}
     >
       {children}
     </AppContext.Provider>

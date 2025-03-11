@@ -1,136 +1,221 @@
 "use client";
-// components/Navbar.jsx
-import React, { useEffect, useState } from "react";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useAppContext } from "../Context/AppContext";
-import { usePathname } from "next/navigation";
-import { logGAEvent } from "../app/googleAnalytics/gaEvents";
+import ThemeToggle from "./ThemeToggle";
+import { useAppContext } from "@/Context/AppContext";
 
-const Navbar = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { tool } = useAppContext();
-  const pathname = usePathname();
+export default function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, isAuthenticated, logout } = useAppContext();
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    pathname !== "/" && (
-      <nav className="bg-slate-900 text-white py-5 px-6 shadow-md fixed w-full top-0 z-50">
-        <div className="mx-auto flex justify-between items-center">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md py-3"
+          : "bg-transparent py-5"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center">
           {/* Logo */}
-          <div>
-            <Link href="/" className="flex items-center text-xl text-blue-400">
-              {tool ? (
-                <div
-                  className="relative"
-                  style={{
-                    transform: "translateY(-6px)",
-                  }}
-                >
-                  {tool}
-                  <span
-                    style={{
-                      top: "19px",
-                      right: "1px",
-                      paddingTop: "1px",
-                      fontSize: "0.7rem",
-                    }}
-                    className="absolute text-white"
-                  >
-                    <i>by</i> NEXONWARE
-                  </span>{" "}
-                </div>
-              ) : (
-                "Nexonware"
-              )}
+          <div className="flex-shrink-0">
+            <Link href="/" className="flex items-center">
+              <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                Nexonware
+              </span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8 items-center">
-            {/* Solutions Dropdown */}
-            {/*<div className="relative group">
-            <button
-              className="flex items-center hover:text-blue-400 transition-colors"
-              onClick={toggleDropdown}
+          <div className="hidden md:flex items-center space-x-8">
+            <Link
+              href="/products"
+              className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
             >
-              Solutions <span className="ml-1">▼</span>
-            </button>
-
-            <div
-              className={`absolute left-0 mt-2 rounded-md shadow-lg bg-slate-800 ring-1 ring-black ring-opacity-5 transition-all duration-200 ${
-                isDropdownOpen
-                  ? "opacity-100 visible"
-                  : "opacity-0 invisible group-hover:opacity-100 group-hover:visible"
-              }`}
+              Products
+            </Link>
+            <Link
+              href="/solutions"
+              className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
             >
-              <div className="py-1">
-                <Link
-                  href="/solutions/enterprise"
-                  className="block px-4 py-2 text-sm hover:bg-slate-700 hover:text-blue-400"
-                >
-                  Enterprise
-                </Link>
-                <Link
-                  href="/solutions/small-business"
-                  className="block px-4 py-2 text-sm hover:bg-slate-700 hover:text-blue-400"
-                >
-                  Small Business
-                </Link>
-                <Link
-                  href="/solutions/developers"
-                  className="block px-4 py-2 text-sm hover:bg-slate-700 hover:text-blue-400"
-                >
-                  Developers
-                </Link>
-              </div>
-            </div> 
-          </div>*/}
-            {/* if window location is exactly nexonware.com */}
-            <div
-              style={{
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                alert(
-                  "Want something changed? Email your request to neeleshsharma351@gmail.com"
-                );
-                logGAEvent("click_give_feedback");
-              }}
-              className="hover:text-blue-400 transition-colors"
+              Solutions
+            </Link>
+            <Link
+              href="/pricing"
+              className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
             >
-              Give Feedback
-            </div>
-            {/* buy me a coffee */}
-            {/* <a
-              href="https://www.buymeacoffee.com/neensta"
-              onClick={() => logGAEvent("click_buy_me_a_coffee")}
-              target="_blank"
+              Pricing
+            </Link>
+            <Link
+              href="/about"
+              className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
             >
-              <img
-                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-                alt="Buy Me A Coffee"
-                style={{ height: "35px" }}
-              />
-            </a> */}
+              About
+            </Link>
           </div>
-          {/* CTA Buttons */}
-          {/* <div className="hidden md:flex items-center space-x-4"></div> */}
 
-          {/* Mobile Menu Button (hidden on desktop) */}
-          <div className="md:hidden">
-            <button className="text-white focus:outline-none">
-              <span className="block w-6 h-px bg-white mb-1"></span>
-              <span className="block w-6 h-px bg-white mb-1"></span>
-              <span className="block w-6 h-px bg-white"></span>
+          {/* Right side buttons */}
+          <div className="hidden md:flex items-center space-x-4">
+            {/* <ThemeToggle /> */}
+            {isAuthenticated ? (
+              <>
+                <Link
+                  href="/profile"
+                  className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
+                >
+                  Profile
+                </Link>
+                <button
+                  onClick={logout}
+                  className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/signin"
+                  className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
+                >
+                  Sign In
+                </Link>
+                <Link href="/register" className="btn-primary">
+                  Register
+                </Link>
+              </>
+            )}
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="flex items-center space-x-2 md:hidden">
+            {/* <ThemeToggle /> */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none"
+            >
+              {isMobileMenuOpen ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  />
+                </svg>
+              )}
             </button>
           </div>
         </div>
-      </nav>
-    )
-  );
-};
+      </div>
 
-export default Navbar;
+      {/* Mobile menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white dark:bg-gray-900 shadow-lg">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <Link
+              href="/products"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Products
+            </Link>
+            <Link
+              href="/solutions"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Solutions
+            </Link>
+            <Link
+              href="/pricing"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Pricing
+            </Link>
+            <Link
+              href="/about"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              About
+            </Link>
+            <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    href="/profile"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={() => {
+                      logout();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/signin"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="block px-3 py-2 mt-2 rounded-md text-base font-medium bg-primary-600 text-white hover:bg-primary-700"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+}
