@@ -36,12 +36,12 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            {/* <Link href="auth/register" className="btn-primary">
-              Get Started
-            </Link> */}
-            {/* <Link href="/solutions" className="btn-outline">
-              Explore Solutions
-            </Link> */}
+            <Link href="/signin" className="btn-outline">
+              Sign in
+            </Link>
+            <Link href="register" className="btn-primary">
+              Register
+            </Link>
           </motion.div>
 
           {/* Stats */}

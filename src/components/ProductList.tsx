@@ -230,7 +230,7 @@ const ProductList: React.FC<ProductListProps> = ({
               return (
                 <div
                   key={product.id}
-                  className="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow duration-300"
+                  className="overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow duration-300"
                 >
                   <div className="px-5 py-4 border-b border-gray-100">
                     <div className="flex items-center justify-between">
