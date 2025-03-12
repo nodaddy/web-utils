@@ -207,13 +207,13 @@ export const allUtilities = {
       "icon": "🚀"
     },
     {
-      "id": "SVG Optimizer",
+      "id": "SVG-optimizer",
       "title": "SVG Optimizer",
       "description": " Optimize SVG files for smaller size and faster loading",
       "icon": "💡"
     },
     {
-      "id": "SQL Formatter ",
+      "id": "sql-Formatter",
       "title": "SQL Formatter ",
       "description": " Optimize SVG files for smaller size and faster loading",
       "icon": "💡"
@@ -249,7 +249,7 @@ export const allUtilities = {
       "icon": "💡"
     },
     {
-      "id": "Phone-Number-Formatter ",
+      "id": "Phone-Number-Formatter",
       "title": "Phone Number Formatter ",
       "description": "Format phone numbers into standardized forms",
       "icon": "💡"
