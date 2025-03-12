@@ -134,6 +134,156 @@ export const allUtilities = {
       description: "Encode or Decode Urls",
       icon: "🎯",
     },
+    {
+      "id": "image-compressor",
+      "title": "Image compressor",
+      "description": "Compress Your Image ",
+      "icon": "💡"
+    },
+    {
+      "id": "pdf-to-word",
+      "title": "PDF to Word ",
+      "description": "PDF to Word Converter – Effortless & Accurate",
+      "icon": "🌟"
+    },
+    {
+      "id": "PDF-to-excel",
+      "title": "PDF to Excel",
+      "description": "Smart PDF to Excel Converter – Fast & Precise",
+      "icon": "🔥"
+    },
+    {
+      "id": "PowerPDF-to-PPT",
+      "title": "PowerPDF-to-PPT",
+      "description": "Convert PDFs into engaging PowerPoint presentations effortlessly",
+      "icon": "🚀"
+    },
+    {
+      "id": "SVG-to-PNG-Converter",
+      "title": "SVG to PNG Converter",
+      "description": "Transform SVG into high-quality PNG images",
+      "icon": "💻"
+    },
+    {
+      "id": "WEBP-to-JPG-Converter",
+      "title": "WEBP to JPG Converter",
+      "description": "Fast and Flawless Image Transformation",
+      "icon": "🎯"
+    },
+    {
+      "id": "PDF-merge",
+      "title": "Merge PDF",
+      "description": "Combine multiple PDF files into one document",
+      "icon": "⚡"
+    },
+    {
+      "id": "Split-PDF",
+      "title": "Split PDF",
+      "description": "Split a PDF document into multiple files.",
+      "icon": "📱"
+    },
+    {
+      "id": "XML-to-CSV-Converter",
+      "title": "XML to CSV Converter",
+      "description": "Convert XML data into CSV format",
+      "icon": "💡"
+    },
+    {
+      "id": "Video-Compressor",
+      "title": "Video Compressor",
+      "description": "Reduce video file sizes while maintaining resolution.",
+      "icon": "📱"
+    }, 
+    {
+      "id": "ZIP-File-Creator",
+      "title": "ZIP File Creator",
+      "description": "Compress files into a ZIP archive.",
+      "icon": "💡"
+    },
+    {
+      "id": "Bulk-Image-Resizer",
+      "title": "Bulk Image Resizer",
+      "description": " Resize multiple images at once",
+      "icon": "🚀"
+    },
+    {
+      "id": "SVG Optimizer",
+      "title": "SVG Optimizer",
+      "description": " Optimize SVG files for smaller size and faster loading",
+      "icon": "💡"
+    },
+    {
+      "id": "SQL Formatter ",
+      "title": "SQL Formatter ",
+      "description": " Optimize SVG files for smaller size and faster loading",
+      "icon": "💡"
+    },
+    {
+      "id": "HTML-Formatter",
+      "title": "HTML Formatter",
+      "description": "Beautify and format HTML code",
+      "icon": "💡"
+    },
+    {
+      "id": "CSS-Formatter",
+      "title": "CSS Formatter",
+      "description": "Format and organize CSS code",
+      "icon": "📱"
+    },
+    {
+      "id": "XML-Formatter",
+      "title": "XML Formatter",
+      "description": " Format XML code for better structure",
+      "icon": "💡"
+    },
+    {
+      "id": "CSV-Validator",
+      "title": "CSV Validator",
+      "description": "Check CSV files for formatting errors",
+      "icon": "🔥"
+    },
+    {
+      "id": "Email-Validator",
+      "title": "Email Validator",
+      "description": "Verify the authenticity of email addresses",
+      "icon": "💡"
+    },
+    {
+      "id": "Phone-Number-Formatter ",
+      "title": "Phone Number Formatter ",
+      "description": "Format phone numbers into standardized forms",
+      "icon": "💡"
+    },
+    {
+      "id": "Date-Formatter",
+      "title": "Date Formatter",
+      "description": "Format dates into consistent styles",
+      "icon": "🔥"
+    },
+    {
+      "id": "QR-Code-Generator",
+      "title": "QR Code Generator",
+      "description": "Create custom QR codes for URLs and data",
+      "icon": "💡"
+    },
+    {
+      "id": "Barcode-Generator",
+      "title": "Barcode Generator",
+      "description": "Generate barcodes for various formats",
+      "icon": "🚀"
+    },
+    {
+      "id": "Invoice-Generator",
+      "title": "Invoice Generator",
+      "description": "Create and customize invoices quickly",
+      "icon": "🚀"
+    },
+    {
+      "id": "Email-Signature-Generator",
+      "title": "Email Signature Generator",
+      "description": "Create and customize invoices quickly",
+      "icon": "🚀"
+    },    
   ],
   Productivity: [],
   Lifestyle: [
