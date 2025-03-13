@@ -1,7 +1,16 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+
+// Interface for the decoded payload
+interface RegistrationPayload {
+  companyName: string;
+  adminName: string;
+  adminEmail: string;
+  token: string;
+  expires: number;
+}
 
 // Wrapper component that uses searchParams
 function SetupPasswordForm() {
@@ -9,16 +18,47 @@ function SetupPasswordForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [decodedData, setDecodedData] = useState<RegistrationPayload | null>(
+    null
+  );
+  const [isExpired, setIsExpired] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const token = searchParams.get("token");
-  const email = searchParams.get("email");
+  const encodedData = searchParams.get("data");
+
+  useEffect(() => {
+    if (encodedData) {
+      try {
+        const decoded = JSON.parse(
+          Buffer.from(encodedData, "base64").toString()
+        ) as RegistrationPayload;
+
+        // Check if the token is expired
+        if (decoded.expires < Date.now()) {
+          setIsExpired(true);
+          setError(
+            "This verification link has expired. Please register again."
+          );
+        } else {
+          setDecodedData(decoded);
+        }
+      } catch (err) {
+        setError("Invalid verification link. Please try registering again.");
+      }
+    }
+  }, [encodedData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
+
+    if (!decodedData) {
+      setError("Invalid registration data");
+      setLoading(false);
+      return;
+    }
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -39,8 +79,7 @@ function SetupPasswordForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          token,
-          email,
+          registrationData: decodedData,
           password,
         }),
       });
@@ -52,7 +91,9 @@ function SetupPasswordForm() {
       }
 
       // Redirect to login page on success
-      router.push("/signin?message=Password setup successful. Please signin.");
+      router.push(
+        "/signin?message=Account created successfully. You can now sign in."
+      );
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to setup password");
     } finally {
@@ -60,11 +101,28 @@ function SetupPasswordForm() {
     }
   };
 
-  if (!token || !email) {
+  if (!encodedData) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="p-8 bg-white rounded-lg shadow-md">
-          <p className="text-red-600">Invalid password reset link</p>
+          <p className="text-red-600">Invalid verification link</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isExpired) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="p-8 bg-white rounded-lg shadow-md">
+          <p className="text-red-600">This verification link has expired</p>
+          <p className="mt-4">
+            Please{" "}
+            <a href="/register" className="text-blue-600 hover:underline">
+              register again
+            </a>{" "}
+            to receive a new verification link.
+          </p>
         </div>
       </div>
     );
@@ -76,6 +134,16 @@ function SetupPasswordForm() {
         <h2 className="text-2xl font-bold mb-6 text-center">
           Setup Your Password
         </h2>
+        {decodedData && (
+          <div className="mb-4 p-3 bg-blue-50 text-blue-700 rounded">
+            <p>
+              Creating account for: <strong>{decodedData.adminEmail}</strong>
+            </p>
+            <p>
+              Company: <strong>{decodedData.companyName}</strong>
+            </p>
+          </div>
+        )}
         {error && (
           <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
             {error}
@@ -116,9 +184,9 @@ function SetupPasswordForm() {
           </div>
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || !decodedData}
             className={`w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              loading ? "opacity-50 cursor-not-allowed" : ""
+              loading || !decodedData ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
             {loading ? "Setting up..." : "Set Password"}

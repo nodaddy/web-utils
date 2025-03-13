@@ -1,4 +1,4 @@
-import Comp from "./Comp";
+import PageLayout from "./PageLayout";
 
 export const metadata = {
   title: "Nexonware - Enterprise B2B Solutions",
@@ -7,5 +7,5 @@ export const metadata = {
 };
 
 export default function Home() {
-  return <Comp />;
+  return <PageLayout />;
 }

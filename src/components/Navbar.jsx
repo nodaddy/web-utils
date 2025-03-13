@@ -4,12 +4,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 import { useAppContext } from "@/Context/AppContext";
-import { HelpCircle, Info, PackageSearch } from "lucide-react";
+import { HelpCircle, Info, PackageSearch, Power } from "lucide-react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { theme, isAuthenticated, logout } = useAppContext();
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+  const { theme, logout } = useAppContext();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,6 +21,22 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Use Firebase auth to check authentication status
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsUserAuthenticated(!!user);
+    });
+
+    // Clean up subscription
+    return () => unsubscribe();
+  }, []);
+
+  // If user is authenticated, don't render the navbar at all
+  if (isUserAuthenticated) {
+    return null;
+  }
 
   return (
     <nav
@@ -40,15 +58,14 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="flex items-center space-x-4 text-sm md:text-base">
+          <div className="flex items-center space-x-2 text-sm md:text-base">
             <Link
               href="/products"
               className="flex items-center gap-2 block px-3 py-2 rounded-md font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <PackageSearch /> Products
+              <PackageSearch size={19} /> Products
             </Link>
-
             <Link
               href="/about"
               className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
@@ -56,32 +73,6 @@ export default function Navbar() {
               About
             </Link>
           </div>
-
-          {/* Right side buttons */}
-          {isAuthenticated && (
-            <div className="hidden md:flex items-center space-x-4">
-              {/* <ThemeToggle /> */}
-              {isAuthenticated ? (
-                <>
-                  <Link
-                    href="/profile"
-                    className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
-                  >
-                    Profile
-                  </Link>
-
-                  <button
-                    onClick={logout}
-                    className="text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <></>
-              )}
-            </div>
-          )}
         </div>
       </div>
     </nav>

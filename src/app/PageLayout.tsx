@@ -2,9 +2,8 @@
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, getIdTokenResult } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import ProductList from "@/components/ProductList";
+import Dashboard from "../components/Dashboard";
 import Hero from "@/components/Hero";
-import Feature from "@/components/Features";
 import CTA from "@/components/CTA";
 import { products } from "@/products";
 
@@ -14,13 +13,14 @@ export default function Comp() {
   const [companyProducts, setCompanyProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState("");
+  const [companyName, setCompanyName] = useState("Nexonware Solutions");
 
   // Set up token refresh interval
   useEffect(() => {
     let tokenRefreshInterval;
 
     if (user) {
-      // Force token refresh every 10 minutes to prevent expiration
+      // Force token refresh every 30 minutes instead of 10 to reduce unnecessary refreshes
       tokenRefreshInterval = setInterval(async () => {
         try {
           // This will refresh the token
@@ -29,7 +29,7 @@ export default function Comp() {
         } catch (error) {
           console.error("Error refreshing token:", error);
         }
-      }, 10 * 60 * 1000); // 10 minutes
+      }, 30 * 60 * 1000); // 30 minutes
     }
 
     return () => {
@@ -37,8 +37,14 @@ export default function Comp() {
     };
   }, [user]);
 
+  // Single authentication effect to prevent multiple auth state changes
   useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (!isMounted) return;
+
       setUser(currentUser);
 
       if (currentUser) {
@@ -54,12 +60,17 @@ export default function Comp() {
           const tokenResult = await getIdTokenResult(currentUser);
           const companyId = tokenResult.claims.companyId;
 
-          if (companyId) {
+          if (companyId && isMounted) {
             // Fetch the company document
             const response = await fetch(`/api/company?companyId=${companyId}`);
             const data = await response.json();
 
-            if (data.success && data.company) {
+            if (data.success && data.company && isMounted) {
+              // Set company name from the company data
+              if (data.company.companyName && data.company.companyName !== "") {
+                setCompanyName(data.company.companyName);
+              }
+
               // Filter products based on ownedNexonwareProductIds
               const ownedProductIds =
                 data.company.ownedNexonwareProductIds || [];
@@ -81,11 +92,16 @@ export default function Comp() {
         }
       }
 
-      setAuthChecked(true);
-      setLoading(false);
+      if (isMounted) {
+        setAuthChecked(true);
+        setLoading(false);
+      }
     });
 
-    return () => unsubscribe();
+    return () => {
+      isMounted = false;
+      unsubscribe();
+    };
   }, []);
 
   const handleLogout = async () => {
@@ -107,17 +123,16 @@ export default function Comp() {
   return (
     <div className="min-h-screen">
       {user ? (
-        <ProductList
-          products={companyProducts}
+        <Dashboard
+          handleLogout={handleLogout}
           userName={userName}
-          organization={user.email?.split("@")[1] || "Nexonware Enterprise"}
+          organization={companyName}
         />
       ) : (
-        <div>
+        <>
           <Hero />
-          {/* <Feature /> */}
           <CTA />
-        </div>
+        </>
       )}
     </div>
   );

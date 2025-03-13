@@ -15,17 +15,37 @@ export const AppProvider = ({ children }) => {
   const [theme, setTheme] = useState("light");
   const [tool, setTool] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authInitialized, setAuthInitialized] = useState(false);
 
   const logout = () => {
     signOut(auth);
+    setUser(null);
+    setIsAuthenticated(false);
   };
 
+  // Set up a single auth state listener to prevent multiple refreshes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsAuthenticated(!!user);
-    });
-    return () => unsubscribe();
-  }, []);
+    let isMounted = true;
+
+    // Only set up the listener if auth hasn't been initialized yet
+    if (!authInitialized) {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (isMounted) {
+          setIsAuthenticated(!!user);
+          setAuthInitialized(true);
+        }
+      });
+
+      return () => {
+        isMounted = false;
+        unsubscribe();
+      };
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [authInitialized]);
 
   return (
     <AppContext.Provider

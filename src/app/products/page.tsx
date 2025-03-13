@@ -12,9 +12,13 @@ import {
   Sparkles,
   Stars,
 } from "lucide-react";
+import { useAppContext } from "@/Context/AppContext";
 
 // Cart context to share cart state between components
 function ProductsContent() {
+  // Get authentication state from context
+  const { isAuthenticated } = useAppContext();
+
   // Cart functionality
   const [cart, setCart] = useState<string[]>([]);
 
@@ -45,7 +49,7 @@ function ProductsContent() {
 
       <div className="relative z-10 pt-16">
         <ProductsSection addToCart={addToCart} isInCart={isInCart} />
-        <WebUtilitiesSection />
+        <WebUtilitiesSection authenticated={isAuthenticated} />
       </div>
     </div>
   );
@@ -131,7 +135,7 @@ function ProductsSection({
 }
 
 // Web utilities section component
-function WebUtilitiesSection() {
+function WebUtilitiesSection({ authenticated }: { authenticated: boolean }) {
   return (
     <section className="py-12 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -139,18 +143,25 @@ function WebUtilitiesSection() {
           <h2 className="flex items-center gap-2 text-xl text-gray-800 sm:text-2xl font-semibold">
             <Sparkles className="text-gray-700" /> Complementary Web Utilities
           </h2>
-          <p className="mt-4 text-lg text-gray-600">
-            <Link
-              href="/register"
-              className="text-blue-600 hover:text-blue-800"
-            >
-              Register
-            </Link>{" "}
-            your company to get access to the following secure web utilities
-            without any additional cost
-            <br />
-            <sup>*No credit card required</sup>
-          </p>
+          {!authenticated ? (
+            <p className="mt-4 text-lg text-gray-600">
+              <Link
+                href="/register"
+                className="text-blue-600 hover:text-blue-800"
+              >
+                Register
+              </Link>{" "}
+              your company to get access to the following secure web utilities
+              without any additional cost
+              <br />
+              <sup>*No credit card required</sup>
+            </p>
+          ) : (
+            <p className="mt-4 text-lg text-gray-600">
+              You can use the following secure web utilities on a daily basis
+              without any additional cost
+            </p>
+          )}
         </div>
 
         <div className="mt-12">
